@@ -1,40 +1,34 @@
-import React, { useState } from 'react';
-import { Player } from './Player';
-
-export type Players = 'player1' | 'player2';
+import React from 'react';
+import { PlayerDashboard } from './PlayerDashboard';
+import { Castle } from './Castle';
+import './App.css'
 
 const App: React.FC = () => {
-    const initialPlayer: Players = 'player1';
-
-    const [currentPlayer, setCurrentPlayer] = useState<Players>(initialPlayer);
-    const [player1WallHeight, setPlayer1WallHeight] = useState(20);
-    const [player2WallHeight, setPlayer2WallHeight] = useState(20);
-
-    const playHandler = () => {
-        if (currentPlayer === 'player1') {
-            setPlayer1WallHeight((wallHeight) => wallHeight + 1);
-            setCurrentPlayer('player2');
-        } else {
-            setPlayer2WallHeight((wallHeight) => wallHeight + 2);
-            setCurrentPlayer('player1');
-        }
-    };
-
     return (
-        <>
-            <Player
-                player="player1"
-                currentPlayer={currentPlayer}
-                playHandler={playHandler}
-                wallHeight={player1WallHeight}
+        <div className='game'>
+            <PlayerDashboard
+                builders={3}
+                bricks={5}
+                soldiers={2}
+                weapons={6}
+                mages={2}
+                crystals={7}
+                castle={30}
+                wall={10}
             />
-            <Player
-                player="player2"
-                currentPlayer={currentPlayer}
-                playHandler={playHandler}
-                wallHeight={player2WallHeight}
+            <Castle castle={30} wall={10} />
+            <Castle castle={25} wall={8} />
+            <PlayerDashboard
+                builders={3}
+                bricks={6}
+                soldiers={3}
+                weapons={7}
+                mages={3}
+                crystals={8}
+                castle={25}
+                wall={8}
             />
-        </>
+        </div>
     );
 };
 
