@@ -1,0 +1,45 @@
+.castle {
+    width: 160px; // grass image width
+    height: 255px; // castle image + grass image
+    position: relative; // to allow positioning the grass
+    margin: 0 10px; // to put some spacing around
+}
+
+.castle-image-wrapper {
+    padding: 0 16px; // grass image is 32px wider than the castle image
+    overflow: hidden; // hides overflowing castle in the bottom
+    position: relative;
+}
+
+.trompet-wrapper {
+    position: absolute;
+    left: 46px;
+    z-index: 1;
+}
+
+.flag-wrapper {
+    position: absolute;
+    left: 72px;
+    z-index: 1;
+    transition-property: bottom; // animate changes
+    transition-duration: 0.7s;
+}
+
+.castle-image {
+    position: relative; // allows image to be shifted up/down by the inline CSS "bottom"
+    z-index: 1; // castle is in front of the grass
+    transition-property: bottom; // animate castle changes
+    transition-duration: 0.7s;
+}
+
+.grass-image {
+    position: absolute;
+    bottom: 0px; // so the castle starts in the middle of the grass
+}
+
+.victory-ants-wrapper {
+    z-index: 1;
+    position: absolute;
+    bottom: 5px;
+    left: 18px;
+}

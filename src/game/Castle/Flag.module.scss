@@ -1,0 +1,55 @@
+.flag-black {
+    width: 32px;
+    height: 32px;
+    background-repeat: no-repeat;
+    animation-name: flagBlackAnimation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.flag-red {
+    width: 32px;
+    height: 32px;
+    background-repeat: no-repeat;
+    animation-name: flagRedAnimation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes flagBlackAnimation {
+    0% {
+        background-image: url('../../assets/images/flag/flag-black-1.png');
+    }
+    25% {
+        background-image: url('../../assets/images/flag/flag-black-2.png');
+    }
+    50% {
+        background-image: url('../../assets/images/flag/flag-black-3.png');
+    }
+    75% {
+        background-image: url('../../assets/images/flag/flag-black-4.png');
+    }
+    100% {
+        background-image: url('../../assets/images/flag/flag-black-1.png');
+    }
+}
+
+@keyframes flagRedAnimation {
+    0% {
+        background-image: url('../../assets/images/flag/flag-red-1.png');
+    }
+    25% {
+        background-image: url('../../assets/images/flag/flag-red-2.png');
+    }
+    50% {
+        background-image: url('../../assets/images/flag/flag-red-3.png');
+    }
+    75% {
+        background-image: url('../../assets/images/flag/flag-red-4.png');
+    }
+    100% {
+        background-image: url('../../assets/images/flag/flag-red-1.png');
+    }
+}

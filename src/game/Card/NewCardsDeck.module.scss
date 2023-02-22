@@ -1,0 +1,22 @@
+.card-back {
+    width: 8em;
+    height: 12em;
+    margin: 5px;
+    background-image: url('../../assets/images/card-back.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.new-card {
+    width: 8em;
+    height: 12em;
+    margin: 5px;
+
+    // for card animation
+    z-index: 2; // because of the discard deck
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    transition-property: left, top;
+    transition-duration: 0.7s;
+}

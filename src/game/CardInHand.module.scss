@@ -1,0 +1,18 @@
+.card {
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+
+    // for card animation
+    z-index: 2; // because of the discard deck
+    position: relative;
+    top: 0px;
+    left: 0px;
+    transition-property: left, top;
+    transition-duration: 0.7s;
+}
+
+.card-not-playable {
+    cursor: not-allowed;
+    filter: brightness(60%);
+}

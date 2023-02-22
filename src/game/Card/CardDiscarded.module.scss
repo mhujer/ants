@@ -1,0 +1,19 @@
+.wrapper {
+    position: relative;
+}
+
+.card-discarded {
+    filter: grayscale(100%);
+    position: relative;
+}
+
+.label {
+    position: absolute;
+    z-index: 1;
+    transform: rotate(45deg);
+    top: 75px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 160%;
+    color: red;
+}

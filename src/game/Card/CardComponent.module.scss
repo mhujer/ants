@@ -1,0 +1,73 @@
+@import '../../_vars.scss';
+
+.card {
+    width: 8em;
+    height: 12em;
+    border: 6px solid silver;
+    border-radius: 15px;
+    text-align: center;
+    position: relative; // to allow positioning inside
+    overflow: hidden; // do not let the content overflow in any case
+
+    display: flex;
+    flex-direction: column;
+}
+
+.card-building {
+    background-color: $cardBuildingBackgroundColor;
+    border-color: $cardBuildingBorderColor;
+}
+
+.card-army {
+    background-color: $cardArmyBackgroundColor;
+    border-color: $cardArmyBorderColor;
+}
+
+.card-magic {
+    background-color: $cardMagicBackgroundColor;
+    border-color: $cardMagicBorderColor;
+}
+
+.resource-icon {
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+
+.resource-amount {
+    position: absolute;
+    right: 6px;
+    top: 1px;
+    font-weight: bold;
+}
+
+.card-name-wrapper {
+    flex: 2;
+    margin-top: 30px;
+}
+
+.card-name {
+    margin: 0;
+    font-size: 18px;
+    color: red;
+}
+
+.card-image {
+    // @todo obrázky oříznout a napozicovat pořádně tady
+    min-height: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+    flex: 3;
+}
+
+.description {
+    flex: 2;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    width: 100%;
+    text-align: center;
+    font-size: 80%;
+    font-weight: 500;
+    padding: 0 10px;
+}

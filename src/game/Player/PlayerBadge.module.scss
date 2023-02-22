@@ -1,0 +1,38 @@
+@import '../../_vars.scss';
+
+.badge {
+    background: silver;
+    padding: 10px;
+    margin-bottom: 20px;
+    color: $cardBuildingBorderColor;
+    font-weight: bold;
+    font-size: 130%;
+    text-align: center;
+    border: 10px solid transparent;
+}
+
+.badge-active {
+    border: 10px solid $cardArmyBorderColor;
+    animation-name: borderColorChange;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes borderColorChange {
+    0% {
+        border-color: $cardArmyBorderColor;
+    }
+    25% {
+        border-color: lighten($cardArmyBorderColor, 30);
+    }
+    50% {
+        border-color: lighten($cardArmyBorderColor, 80);
+    }
+    75% {
+        border-color: lighten($cardArmyBorderColor, 30);
+    }
+    100% {
+        border-color: $cardArmyBorderColor;
+    }
+}
