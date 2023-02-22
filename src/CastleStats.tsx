@@ -5,11 +5,7 @@ interface Props {
     wall: number;
 }
 
-export const CastleStats: React.FC<Props> = (
-    {
-        castle,
-        wall,
-    }) => {
+export const CastleStats: React.FC<Props> = ({ castle, wall }) => {
     return (
         <div className="castleStats">
             <dl>

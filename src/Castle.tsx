@@ -5,12 +5,7 @@ interface Props {
     wall: number;
 }
 
-export const Castle: React.FC<Props> = (
-    {
-        castle,
-        wall,
-    }) => {
-
+export const Castle: React.FC<Props> = ({ castle, wall }) => {
     const castleCss = {
         border: '1px solid gray',
         background: 'silver',
@@ -26,12 +21,8 @@ export const Castle: React.FC<Props> = (
 
     return (
         <div>
-            <div style={{ ...castleCss, height: castleHeight.toString() + 'px' }}>
-                Hrad {castle}
-            </div>
-            <div style={{ ...wallCss, height: wallHeight.toString() + 'px' }}>
-                Zeď {wall}
-            </div>
+            <div style={{ ...castleCss, height: castleHeight.toString() + 'px' }}>Hrad {castle}</div>
+            <div style={{ ...wallCss, height: wallHeight.toString() + 'px' }}>Zeď {wall}</div>
         </div>
     );
 };

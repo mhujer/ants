@@ -1,19 +1,13 @@
 import React from 'react';
 
 interface Props {
-    creatorsLabel: string,
+    creatorsLabel: string;
     creators: number;
     amountLabel: string;
     amount: number;
 }
 
-export const PlayerStats: React.FC<Props> = (
-    {
-        creatorsLabel,
-        creators,
-        amountLabel,
-        amount,
-    }) => {
+export const PlayerStats: React.FC<Props> = ({ creatorsLabel, creators, amountLabel, amount }) => {
     return (
         <div className="playerStats">
             <dl>

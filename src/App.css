@@ -3,12 +3,12 @@
     flex-direction: row;
 }
 
-
 .playerDashboard {
     flex: 2;
 }
 
-.playerStats, .castleStats {
+.playerStats,
+.castleStats {
     border: 1px dotted black;
     margin: 3px;
 }
