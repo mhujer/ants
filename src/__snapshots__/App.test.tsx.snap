@@ -1,0 +1,33 @@
+// Vitest Snapshot v1
+
+exports[`App > renders timer for 0 seconds 1`] = `
+[
+  <div
+    style={
+      {
+        "border": "2px solid green",
+      }
+    }
+  >
+    <h1>
+      20
+    </h1>
+    <button
+      onClick={[Function]}
+    >
+      Build!
+    </button>
+  </div>,
+  <div
+    style={
+      {
+        "border": "",
+      }
+    }
+  >
+    <h1>
+      20
+    </h1>
+  </div>,
+]
+`;
