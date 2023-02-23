@@ -1,5 +1,5 @@
 import React from 'react';
-import { ResourceType } from './App';
+import { ResourceType } from './ResourceType';
 
 interface Props {
     resourceType: ResourceType;

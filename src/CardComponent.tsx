@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, ResourceType } from './App';
 import { ResourceIcon } from './ResourceIcon';
+import { Card } from './Card';
+import { ResourceType } from './ResourceType';
 
 interface Props {
     card: Card;
