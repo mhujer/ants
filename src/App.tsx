@@ -126,7 +126,7 @@ export class Card {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
  */
 function getRandomInt(max: number): number {
-    return Math.floor(Math.random() * max) + 1;
+    return Math.floor(Math.random() * max);
 }
 
 function generateCard(): Card {
@@ -141,13 +141,10 @@ function generateCard(): Card {
     );
 }
 
-
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const cardFoundations = cardDefinitions[0]!;
-
 interface PlayerGameState {
     castle: number,
     bricks: number,
+    cards: Card[],
 }
 
 interface GameState {
@@ -158,7 +155,7 @@ interface GameState {
 
 interface PlayCardAction {
     type: 'playCard';
-    card: CardDefinition;
+    card: Card;
 }
 
 type GameAction = PlayCardAction;
@@ -170,8 +167,11 @@ const gameStateReducer = (gameState: GameState, action: GameAction): GameState =
     switch (action.type) {
         case 'playCard': {
             const card = action.card;
+            const cardDefinition = card.getType();
 
-            if (card.id === 'foundations') {
+            if (cardDefinition.id === 'foundations') {
+
+                const playerState = gameState.playerOnTurn === Player.BLACK_ANTS ? {...gameState.playerBlack} : {...gameState.playerRed}
 
                 if (gameState.playerOnTurn === Player.BLACK_ANTS) {
                     const newState = {
@@ -180,11 +180,12 @@ const gameStateReducer = (gameState: GameState, action: GameAction): GameState =
                             ...gameState.playerBlack,
                             castle: gameState.playerBlack.castle + 1,
                             // @todo použít resource type
-                            bricks: gameState.playerBlack.bricks - card.resourceRequiredAmount,
+                            bricks: gameState.playerBlack.bricks - cardDefinition.resourceRequiredAmount,
                         },
                         playerOnTurn: Player.RED_ANTS,
                     };
 
+                    // @todo handle turnStart - přičíst suroviny
                     const extraNewState = {
                         ...newState,
                         playerRed: {
@@ -204,7 +205,7 @@ const gameStateReducer = (gameState: GameState, action: GameAction): GameState =
                             ...gameState.playerRed,
                             castle: gameState.playerRed.castle + 1,
                             // @todo použít resource type
-                            bricks: gameState.playerRed.bricks - card.resourceRequiredAmount,
+                            bricks: gameState.playerRed.bricks - cardDefinition.resourceRequiredAmount,
                         },
                         playerOnTurn: Player.BLACK_ANTS,
                     };
@@ -221,7 +222,7 @@ const gameStateReducer = (gameState: GameState, action: GameAction): GameState =
                 }
             }
 
-            throw new Error(`Unhandled "${card.id}"!`);
+            throw new Error(`Unhandled "${cardDefinition.id}"!`);
         }
         default: {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -237,32 +238,51 @@ const App: React.FC = () => {
         playerBlack: {
             castle: 30,
             bricks: 8,
+            cards: [
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+            ],
         },
         playerRed: {
             castle: 30,
             bricks: 8,
+            cards: [
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+            ],
         },
     });
 
-    function playCard(card: CardDefinition) {
+    function playCard(card: Card) {
         dispatch({
             type: 'playCard',
             card: card,
         });
     }
 
-    const cards = cardDefinitions.map((cardDefinition) => {
-        const card = new Card(cardDefinition);
-        return <CardComponent key={card.getId()} card={card} />;
+    const playerBlackCards = gameState.playerBlack.cards.map((card) => {
+        return <CardComponent key={card.getId()} card={card} playCardHandler={() => playCard(card)} />;
+    });
+
+    const playerRedCards = gameState.playerRed.cards.map((card) => {
+        return <CardComponent key={card.getId()} card={card} playCardHandler={() => playCard(card)} />;
     });
 
     return (
         <>
             <div className='game'>
-                <button disabled={gameState.playerOnTurn !== Player.BLACK_ANTS}
-                        onClick={() => playCard(cardFoundations)}>
-                    Black build
-                </button>
                 <PlayerDashboard
                     builders={3}
                     bricks={gameState.playerBlack.bricks}
@@ -285,12 +305,20 @@ const App: React.FC = () => {
                     castle={gameState.playerRed.castle}
                     wall={8}
                 />
-                <button disabled={gameState.playerOnTurn !== Player.RED_ANTS} onClick={() => playCard(cardFoundations)}>
-                    Red build
-                </button>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-                {cards}
+            <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                opacity: gameState.playerOnTurn !== Player.BLACK_ANTS ? 0.3 : 1,
+            }}>
+                {playerBlackCards}
+            </div>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                opacity: gameState.playerOnTurn !== Player.RED_ANTS ? 0.3 : 1,
+            }}>
+                {playerRedCards}
             </div>
         </>
     );

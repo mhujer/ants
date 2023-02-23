@@ -22,7 +22,7 @@ export const Castle: React.FC<Props> = ({ castle, wall }) => {
     return (
         <div>
             <div style={{ ...castleCss, height: castleHeight.toString() + 'px' }}>Hrad {castle}</div>
-            <div style={{ ...wallCss, height: wallHeight.toString() + 'px' }}>Zeď {wall}</div>
+            <div style={{ ...wallCss, height: wallHeight.toString() + 'px' }}>Hradba {wall}</div>
         </div>
     );
 };

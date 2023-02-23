@@ -4,9 +4,10 @@ import { ResourceIcon } from './ResourceIcon';
 
 interface Props {
     card: Card;
+    playCardHandler: () => void;
 }
 
-export const CardComponent: React.FC<Props> = ({ card }) => {
+export const CardComponent: React.FC<Props> = ({ card, playCardHandler }) => {
     const cardDefinition = card.getType();
 
     let cardRequirementsAmount;
@@ -26,7 +27,9 @@ export const CardComponent: React.FC<Props> = ({ card }) => {
     }
 
     return (
-        <div style={{ width: '7em', height: '12em', border: '1px dotted silver', borderRadius: 15, padding: 10, margin: 10 }}>
+        <div
+            onClick={playCardHandler}
+            style={{ width: '7em', height: '12em', border: '1px dotted silver', borderRadius: 15, padding: 10, margin: 10 }}>
             <ResourceIcon resourceType={cardRequirementsType} />
             <div>{cardRequirementsAmount}</div>
             <h1>{cardDefinition.name}</h1>
