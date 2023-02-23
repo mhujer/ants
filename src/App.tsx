@@ -1,8 +1,10 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import { PlayerDashboard } from './PlayerDashboard';
 import { Castle } from './Castle';
 import './App.css';
 import { CardComponent } from './CardComponent';
+import { useImmerReducer } from 'use-immer';
+import { Draft } from 'immer';
 
 enum Player {
     BLACK_ANTS,
@@ -105,8 +107,8 @@ const cardDefinitions: CardDefinition[] = [
 ];
 
 export class Card {
-    private id: string;
-    private type: CardDefinition;
+    private readonly id: string;
+    private readonly type: CardDefinition;
 
     constructor(type: CardDefinition) {
         this.id = crypto.randomUUID();
@@ -142,15 +144,21 @@ function generateCard(): Card {
 }
 
 interface PlayerGameState {
-    castle: number,
-    bricks: number,
-    cards: Card[],
+    readonly builders: number;
+    readonly bricks: number;
+    readonly soldiers: number;
+    readonly weapons: number;
+    readonly mages: number;
+    readonly crystals: number;
+    readonly castle: number;
+    readonly wall: number;
+    readonly cards: Card[],
 }
 
 interface GameState {
-    playerOnTurn: Player;
-    playerBlack: PlayerGameState,
-    playerRed: PlayerGameState,
+    readonly playerOnTurn: Player;
+    readonly playerBlack: PlayerGameState,
+    readonly playerRed: PlayerGameState,
 }
 
 interface PlayCardAction {
@@ -160,84 +168,119 @@ interface PlayCardAction {
 
 type GameAction = PlayCardAction;
 
-const gameStateReducer = (gameState: GameState, action: GameAction): GameState => {
-    console.dir(gameState);
-    console.dir(action);
-
+const gameStateReducer = (gameState: Draft<GameState>, action: GameAction): void => {
     switch (action.type) {
         case 'playCard': {
             const card = action.card;
             const cardDefinition = card.getType();
 
-            if (cardDefinition.id === 'foundations') {
+            const playerState = gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack : gameState.playerRed;
+            const opponentState = gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerRed : gameState.playerBlack;
 
-                const playerState = gameState.playerOnTurn === Player.BLACK_ANTS ? {...gameState.playerBlack} : {...gameState.playerRed}
+            if (cardDefinition.requiredResources.bricks !== undefined) {
+                // @todo check, že jde zahrát
+                playerState.bricks -= cardDefinition.requiredResources.bricks;
+            } else if (cardDefinition.requiredResources.weapons !== undefined) {
+                // @todo check, že jde zahrát
+                playerState.weapons -= cardDefinition.requiredResources.weapons;
+            } else if (cardDefinition.requiredResources.crystals !== undefined) {
+                // @todo check, že jde zahrát
+                playerState.crystals -= cardDefinition.requiredResources.crystals;
+            }
 
-                if (gameState.playerOnTurn === Player.BLACK_ANTS) {
-                    const newState = {
-                        ...gameState,
-                        playerBlack: {
-                            ...gameState.playerBlack,
-                            castle: gameState.playerBlack.castle + 1,
-                            // @todo použít resource type
-                            bricks: gameState.playerBlack.bricks - cardDefinition.resourceRequiredAmount,
-                        },
-                        playerOnTurn: Player.RED_ANTS,
-                    };
-
-                    // @todo handle turnStart - přičíst suroviny
-                    const extraNewState = {
-                        ...newState,
-                        playerRed: {
-                            ...newState.playerRed,
-                            bricks: newState.playerRed.bricks + 3,
-                        },
-                    };
-
-                    return extraNewState;
+            if (cardDefinition.impact.player !== undefined) {
+                if (cardDefinition.impact.player.castle !== undefined) {
+                    playerState.castle += cardDefinition.impact.player.castle;
                 }
-
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                if (gameState.playerOnTurn === Player.RED_ANTS) {
-                    const newState = {
-                        ...gameState,
-                        playerRed: {
-                            ...gameState.playerRed,
-                            castle: gameState.playerRed.castle + 1,
-                            // @todo použít resource type
-                            bricks: gameState.playerRed.bricks - cardDefinition.resourceRequiredAmount,
-                        },
-                        playerOnTurn: Player.BLACK_ANTS,
-                    };
-
-                    const extraNewState = {
-                        ...newState,
-                        playerBlack: {
-                            ...newState.playerBlack,
-                            bricks: newState.playerBlack.bricks + 3,
-                        },
-                    };
-
-                    return extraNewState;
+                if (cardDefinition.impact.player.wall !== undefined) {
+                    playerState.wall += cardDefinition.impact.player.wall;
+                }
+                if (cardDefinition.impact.player.builders !== undefined) {
+                    playerState.builders += cardDefinition.impact.player.builders;
+                }
+                if (cardDefinition.impact.player.bricks !== undefined) {
+                    playerState.bricks += cardDefinition.impact.player.bricks;
+                }
+                if (cardDefinition.impact.player.soldiers !== undefined) {
+                    playerState.soldiers += cardDefinition.impact.player.soldiers;
+                }
+                if (cardDefinition.impact.player.weapons !== undefined) {
+                    playerState.weapons += cardDefinition.impact.player.weapons;
+                }
+                if (cardDefinition.impact.player.mages !== undefined) {
+                    playerState.mages += cardDefinition.impact.player.mages;
+                }
+                if (cardDefinition.impact.player.crystals !== undefined) {
+                    playerState.crystals += cardDefinition.impact.player.crystals;
                 }
             }
 
-            throw new Error(`Unhandled "${cardDefinition.id}"!`);
+            if (cardDefinition.impact.opponent !== undefined) {
+                if (cardDefinition.impact.opponent.attack !== undefined) {
+                    const attack = cardDefinition.impact.opponent.attack;
+                    const attackEffectOnWall = opponentState.wall >= attack ? attack : opponentState.wall;
+                    let attackEffectOnCastle = 0;
+                    if (attackEffectOnWall < attack) {
+                        attackEffectOnCastle = attack - attackEffectOnWall;
+                    }
+                    opponentState.wall -= attackEffectOnWall;
+                    opponentState.castle -= attackEffectOnCastle;
+                }
+                if (cardDefinition.impact.opponent.castle !== undefined) {
+                    opponentState.castle += cardDefinition.impact.opponent.castle;
+                }
+                if (cardDefinition.impact.opponent.wall !== undefined) {
+                    opponentState.wall += cardDefinition.impact.opponent.wall;
+                }
+                if (cardDefinition.impact.opponent.builders !== undefined) {
+                    opponentState.builders += cardDefinition.impact.opponent.builders;
+                }
+                if (cardDefinition.impact.opponent.bricks !== undefined) {
+                    opponentState.bricks += cardDefinition.impact.opponent.bricks;
+                }
+                if (cardDefinition.impact.opponent.soldiers !== undefined) {
+                    opponentState.soldiers += cardDefinition.impact.opponent.soldiers;
+                }
+                if (cardDefinition.impact.opponent.weapons !== undefined) {
+                    opponentState.weapons += cardDefinition.impact.opponent.weapons;
+                }
+                if (cardDefinition.impact.opponent.mages !== undefined) {
+                    opponentState.mages += cardDefinition.impact.opponent.mages;
+                }
+                if (cardDefinition.impact.opponent.crystals !== undefined) {
+                    opponentState.crystals += cardDefinition.impact.opponent.crystals;
+                }
+            }
+
+            const nextPlayerState = gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerRed : gameState.playerBlack;
+            nextPlayerState.bricks += nextPlayerState.builders;
+            nextPlayerState.weapons += nextPlayerState.soldiers;
+            nextPlayerState.crystals += nextPlayerState.mages;
+
+            gameState.playerOnTurn = gameState.playerOnTurn === Player.BLACK_ANTS ?  Player.RED_ANTS : Player.BLACK_ANTS;
+
+            break;
         }
+
         default: {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             throw new Error(`Uhandled "${(action.type)}"!`);
         }
-
     }
 };
 
 const App: React.FC = () => {
-    const [gameState, dispatch] = useReducer(gameStateReducer, {
+    const [gameState, dispatch] = useImmerReducer(gameStateReducer, {
         playerOnTurn: Player.BLACK_ANTS,
         playerBlack: {
-            castle: 30,
+            builders: 2,
             bricks: 8,
+            soldiers: 2,
+            weapons: 7,
+            mages: 2,
+            crystals: 5,
+            castle: 30,
+            wall: 10,
             cards: [
                 generateCard(),
                 generateCard(),
@@ -250,8 +293,14 @@ const App: React.FC = () => {
             ],
         },
         playerRed: {
-            castle: 30,
+            builders: 2,
             bricks: 8,
+            soldiers: 2,
+            weapons: 7,
+            mages: 2,
+            crystals: 5,
+            castle: 20,
+            wall: 10,
             cards: [
                 generateCard(),
                 generateCard(),
@@ -284,26 +333,26 @@ const App: React.FC = () => {
         <>
             <div className='game'>
                 <PlayerDashboard
-                    builders={3}
+                    builders={gameState.playerBlack.builders}
                     bricks={gameState.playerBlack.bricks}
-                    soldiers={2}
-                    weapons={6}
-                    mages={2}
-                    crystals={7}
+                    soldiers={gameState.playerBlack.soldiers}
+                    weapons={gameState.playerBlack.weapons}
+                    mages={gameState.playerBlack.mages}
+                    crystals={gameState.playerBlack.crystals}
                     castle={gameState.playerBlack.castle}
-                    wall={20}
+                    wall={gameState.playerBlack.wall}
                 />
-                <Castle castle={gameState.playerBlack.castle} wall={20} />
-                <Castle castle={gameState.playerRed.castle} wall={8} />
+                <Castle castle={gameState.playerBlack.castle} wall={gameState.playerBlack.wall} />
+                <Castle castle={gameState.playerRed.castle} wall={gameState.playerRed.wall} />
                 <PlayerDashboard
-                    builders={3}
+                    builders={gameState.playerRed.builders}
                     bricks={gameState.playerRed.bricks}
-                    soldiers={3}
-                    weapons={7}
-                    mages={3}
-                    crystals={8}
+                    soldiers={gameState.playerRed.soldiers}
+                    weapons={gameState.playerRed.weapons}
+                    mages={gameState.playerRed.mages}
+                    crystals={gameState.playerRed.crystals}
                     castle={gameState.playerRed.castle}
-                    wall={8}
+                    wall={gameState.playerRed.wall}
                 />
             </div>
             <div style={{
