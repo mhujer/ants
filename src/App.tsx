@@ -20,12 +20,12 @@ export enum ResourceType {
 interface CardDefinition {
     id: string;
     name: string;
-    description: string,
+    description: string;
     requiredResources: {
         bricks?: number;
         weapons?: number;
         crystals?: number;
-    },
+    };
     impact: {
         player?: {
             builders?: number;
@@ -36,9 +36,9 @@ interface CardDefinition {
             crystals?: number;
             castle?: number;
             wall?: number;
-        },
+        };
         opponent?: {
-            attack?: number,
+            attack?: number;
             builders?: number;
             bricks?: number;
             soldiers?: number;
@@ -47,8 +47,8 @@ interface CardDefinition {
             crystals?: number;
             castle?: number;
             wall?: number;
-        },
-    }
+        };
+    };
 }
 
 const cardDefinitions: CardDefinition[] = [
@@ -138,9 +138,7 @@ function generateCard(): Card {
     if (randomCardDefinition === undefined) {
         throw new Error(`Card definition "${randomCardDefinitionIndex}" not found!`);
     }
-    return new Card(
-        randomCardDefinition,
-    );
+    return new Card(randomCardDefinition);
 }
 
 interface PlayerGameState {
@@ -152,13 +150,13 @@ interface PlayerGameState {
     readonly crystals: number;
     readonly castle: number;
     readonly wall: number;
-    readonly cards: Card[],
+    readonly cards: Card[];
 }
 
 interface GameState {
     readonly playerOnTurn: Player;
-    readonly playerBlack: PlayerGameState,
-    readonly playerRed: PlayerGameState,
+    readonly playerBlack: PlayerGameState;
+    readonly playerRed: PlayerGameState;
 }
 
 interface PlayCardAction {
@@ -174,8 +172,10 @@ const gameStateReducer = (gameState: Draft<GameState>, action: GameAction): void
             const card = action.card;
             const cardDefinition = card.getType();
 
-            const playerState = gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack : gameState.playerRed;
-            const opponentState = gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerRed : gameState.playerBlack;
+            const playerState =
+                gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack : gameState.playerRed;
+            const opponentState =
+                gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerRed : gameState.playerBlack;
 
             if (cardDefinition.requiredResources.bricks !== undefined) {
                 // @todo check, že jde zahrát
@@ -252,19 +252,20 @@ const gameStateReducer = (gameState: Draft<GameState>, action: GameAction): void
                 }
             }
 
-            const nextPlayerState = gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerRed : gameState.playerBlack;
+            const nextPlayerState =
+                gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerRed : gameState.playerBlack;
             nextPlayerState.bricks += nextPlayerState.builders;
             nextPlayerState.weapons += nextPlayerState.soldiers;
             nextPlayerState.crystals += nextPlayerState.mages;
 
-            gameState.playerOnTurn = gameState.playerOnTurn === Player.BLACK_ANTS ?  Player.RED_ANTS : Player.BLACK_ANTS;
+            gameState.playerOnTurn = gameState.playerOnTurn === Player.BLACK_ANTS ? Player.RED_ANTS : Player.BLACK_ANTS;
 
             break;
         }
 
         default: {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            throw new Error(`Uhandled "${(action.type)}"!`);
+            throw new Error(`Uhandled "${action.type}"!`);
         }
     }
 };
@@ -331,7 +332,7 @@ const App: React.FC = () => {
 
     return (
         <>
-            <div className='game'>
+            <div className="game">
                 <PlayerDashboard
                     builders={gameState.playerBlack.builders}
                     bricks={gameState.playerBlack.bricks}
@@ -355,18 +356,22 @@ const App: React.FC = () => {
                     wall={gameState.playerRed.wall}
                 />
             </div>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'row',
-                opacity: gameState.playerOnTurn !== Player.BLACK_ANTS ? 0.3 : 1,
-            }}>
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    opacity: gameState.playerOnTurn !== Player.BLACK_ANTS ? 0.3 : 1,
+                }}
+            >
                 {playerBlackCards}
             </div>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'row',
-                opacity: gameState.playerOnTurn !== Player.RED_ANTS ? 0.3 : 1,
-            }}>
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    opacity: gameState.playerOnTurn !== Player.RED_ANTS ? 0.3 : 1,
+                }}
+            >
                 {playerRedCards}
             </div>
         </>

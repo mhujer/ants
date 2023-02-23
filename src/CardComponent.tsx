@@ -29,7 +29,15 @@ export const CardComponent: React.FC<Props> = ({ card, playCardHandler }) => {
     return (
         <div
             onClick={playCardHandler}
-            style={{ width: '7em', height: '12em', border: '1px dotted silver', borderRadius: 15, padding: 10, margin: 10 }}>
+            style={{
+                width: '7em',
+                height: '12em',
+                border: '1px dotted silver',
+                borderRadius: 15,
+                padding: 10,
+                margin: 10,
+            }}
+        >
             <ResourceIcon resourceType={cardRequirementsType} />
             <div>{cardRequirementsAmount}</div>
             <h1>{cardDefinition.name}</h1>
