@@ -19,8 +19,7 @@ const App: React.FC = () => {
         });
     }
 
-    const cardsInHand =
-        gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack.cards : gameState.playerRed.cards;
+    const playerOnTurnData = gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack : gameState.playerRed;
 
     return (
         <>
@@ -38,11 +37,7 @@ const App: React.FC = () => {
                 />
                 <Castle castle={gameState.playerBlack.castle} wall={gameState.playerBlack.wall} />
                 {gameState.discardedCard !== undefined ? (
-                    <CardComponent
-                        key={gameState.discardedCard.getId()}
-                        card={gameState.discardedCard}
-                        playCardHandler={() => {}}
-                    />
+                    <CardComponent key={gameState.discardedCard.getId()} card={gameState.discardedCard} />
                 ) : null}
                 <Castle castle={gameState.playerRed.castle} wall={gameState.playerRed.wall} />
                 <PlayerDashboard
@@ -57,7 +52,15 @@ const App: React.FC = () => {
                     wall={gameState.playerRed.wall}
                 />
             </div>
-            <Cards cardsInHand={cardsInHand} playCardHandler={(card: Card) => playCard(card)} />
+            <Cards
+                playerResources={{
+                    bricks: playerOnTurnData.bricks,
+                    weapons: playerOnTurnData.weapons,
+                    crystals: playerOnTurnData.crystals,
+                }}
+                cardsInHand={playerOnTurnData.cards}
+                playCardHandler={(card: Card) => playCard(card)}
+            />
         </>
     );
 };

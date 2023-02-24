@@ -51,13 +51,19 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
                 gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerRed : gameState.playerBlack;
 
             if (cardDefinition.requiredResources.bricks !== undefined) {
-                // @todo check, že jde zahrát
+                if (playerState.bricks < cardDefinition.requiredResources.bricks) {
+                    throw new Error('Should not happen!');
+                }
                 playerState.bricks -= cardDefinition.requiredResources.bricks;
             } else if (cardDefinition.requiredResources.weapons !== undefined) {
-                // @todo check, že jde zahrát
+                if (playerState.weapons < cardDefinition.requiredResources.weapons) {
+                    throw new Error('Should not happen!');
+                }
                 playerState.weapons -= cardDefinition.requiredResources.weapons;
             } else if (cardDefinition.requiredResources.crystals !== undefined) {
-                // @todo check, že jde zahrát
+                if (playerState.crystals < cardDefinition.requiredResources.crystals) {
+                    throw new Error('Should not happen!');
+                }
                 playerState.crystals -= cardDefinition.requiredResources.crystals;
             }
 

@@ -5,10 +5,9 @@ import { ResourceType } from './ResourceType';
 
 interface Props {
     card: Card;
-    playCardHandler: () => void;
 }
 
-export const CardComponent: React.FC<Props> = ({ card, playCardHandler }) => {
+export const CardComponent: React.FC<Props> = ({ card }) => {
     const cardDefinition = card.getType();
 
     let cardRequirementsAmount;
@@ -29,7 +28,6 @@ export const CardComponent: React.FC<Props> = ({ card, playCardHandler }) => {
 
     return (
         <div
-            onClick={playCardHandler}
             style={{
                 width: '7em',
                 height: '12em',
