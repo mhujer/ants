@@ -43,6 +43,9 @@ export const CardComponent: React.FC<Props> = ({ card, playCardHandler }) => {
             <div>{cardRequirementsAmount}</div>
             <h1>{cardDefinition.name}</h1>
             <p>{cardDefinition.description}</p>
+            {/*<pre>
+                {JSON.stringify(cardDefinition, null, 4)}
+            </pre>*/}
         </div>
     );
 };

@@ -25,6 +25,17 @@ interface PlayCardAction {
     card: Card;
 }
 
+const minimalGameStateValues = {
+    builders: 1,
+    bricks: 0,
+    soldiers: 1,
+    weapons: 0,
+    mages: 1,
+    crystals: 0,
+    castle: 0,
+    wall: 0,
+};
+
 type GameAction = PlayCardAction;
 
 export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction): void => {
@@ -52,27 +63,51 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
             if (cardDefinition.impact.player !== undefined) {
                 if (cardDefinition.impact.player.castle !== undefined) {
                     playerState.castle += cardDefinition.impact.player.castle;
+                    if (playerState.castle < minimalGameStateValues.castle) {
+                        playerState.castle = minimalGameStateValues.castle;
+                    }
                 }
                 if (cardDefinition.impact.player.wall !== undefined) {
                     playerState.wall += cardDefinition.impact.player.wall;
+                    if (playerState.wall < minimalGameStateValues.wall) {
+                        playerState.wall = minimalGameStateValues.wall;
+                    }
                 }
                 if (cardDefinition.impact.player.builders !== undefined) {
                     playerState.builders += cardDefinition.impact.player.builders;
+                    if (playerState.builders < minimalGameStateValues.builders) {
+                        playerState.builders = minimalGameStateValues.builders;
+                    }
                 }
                 if (cardDefinition.impact.player.bricks !== undefined) {
                     playerState.bricks += cardDefinition.impact.player.bricks;
+                    if (playerState.bricks < minimalGameStateValues.bricks) {
+                        playerState.bricks = minimalGameStateValues.bricks;
+                    }
                 }
                 if (cardDefinition.impact.player.soldiers !== undefined) {
                     playerState.soldiers += cardDefinition.impact.player.soldiers;
+                    if (playerState.soldiers < minimalGameStateValues.soldiers) {
+                        playerState.soldiers = minimalGameStateValues.soldiers;
+                    }
                 }
                 if (cardDefinition.impact.player.weapons !== undefined) {
                     playerState.weapons += cardDefinition.impact.player.weapons;
+                    if (playerState.weapons < minimalGameStateValues.weapons) {
+                        playerState.weapons = minimalGameStateValues.weapons;
+                    }
                 }
                 if (cardDefinition.impact.player.mages !== undefined) {
                     playerState.mages += cardDefinition.impact.player.mages;
+                    if (playerState.mages < minimalGameStateValues.mages) {
+                        playerState.mages = minimalGameStateValues.mages;
+                    }
                 }
                 if (cardDefinition.impact.player.crystals !== undefined) {
                     playerState.crystals += cardDefinition.impact.player.crystals;
+                    if (playerState.crystals < minimalGameStateValues.crystals) {
+                        playerState.crystals = minimalGameStateValues.crystals;
+                    }
                 }
             }
 
@@ -89,27 +124,51 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
                 }
                 if (cardDefinition.impact.opponent.castle !== undefined) {
                     opponentState.castle += cardDefinition.impact.opponent.castle;
+                    if (opponentState.castle < minimalGameStateValues.castle) {
+                        opponentState.castle = minimalGameStateValues.castle;
+                    }
                 }
                 if (cardDefinition.impact.opponent.wall !== undefined) {
                     opponentState.wall += cardDefinition.impact.opponent.wall;
+                    if (opponentState.wall < minimalGameStateValues.wall) {
+                        opponentState.wall = minimalGameStateValues.wall;
+                    }
                 }
                 if (cardDefinition.impact.opponent.builders !== undefined) {
                     opponentState.builders += cardDefinition.impact.opponent.builders;
+                    if (opponentState.builders < minimalGameStateValues.builders) {
+                        opponentState.builders = minimalGameStateValues.builders;
+                    }
                 }
                 if (cardDefinition.impact.opponent.bricks !== undefined) {
                     opponentState.bricks += cardDefinition.impact.opponent.bricks;
+                    if (opponentState.bricks < minimalGameStateValues.bricks) {
+                        opponentState.bricks = minimalGameStateValues.bricks;
+                    }
                 }
                 if (cardDefinition.impact.opponent.soldiers !== undefined) {
                     opponentState.soldiers += cardDefinition.impact.opponent.soldiers;
+                    if (opponentState.soldiers < minimalGameStateValues.soldiers) {
+                        opponentState.soldiers = minimalGameStateValues.soldiers;
+                    }
                 }
                 if (cardDefinition.impact.opponent.weapons !== undefined) {
                     opponentState.weapons += cardDefinition.impact.opponent.weapons;
+                    if (opponentState.weapons < minimalGameStateValues.weapons) {
+                        opponentState.weapons = minimalGameStateValues.weapons;
+                    }
                 }
                 if (cardDefinition.impact.opponent.mages !== undefined) {
                     opponentState.mages += cardDefinition.impact.opponent.mages;
+                    if (opponentState.mages < minimalGameStateValues.mages) {
+                        opponentState.mages = minimalGameStateValues.mages;
+                    }
                 }
                 if (cardDefinition.impact.opponent.crystals !== undefined) {
                     opponentState.crystals += cardDefinition.impact.opponent.crystals;
+                    if (opponentState.crystals < minimalGameStateValues.crystals) {
+                        opponentState.crystals = minimalGameStateValues.crystals;
+                    }
                 }
             }
 
