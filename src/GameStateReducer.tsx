@@ -16,6 +16,7 @@ interface PlayerGameState {
 
 interface GameState {
     readonly playerOnTurn: Player;
+    discardedCard?: Card;
     readonly playerBlack: PlayerGameState;
     readonly playerRed: PlayerGameState;
 }
@@ -172,6 +173,12 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
                 }
             }
 
+            // draw a new card
+            gameState.discardedCard = card;
+            const playedCardIndex = playerState.cards.indexOf(card);
+            playerState.cards[playedCardIndex] = generateCard();
+
+            // next turn
             const nextPlayerState =
                 gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerRed : gameState.playerBlack;
             nextPlayerState.bricks += nextPlayerState.builders;
@@ -190,7 +197,7 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
     }
 };
 
-export function getInitialState() {
+export function getInitialState(): GameState {
     return {
         playerOnTurn: Player.BLACK_ANTS,
         playerBlack: {

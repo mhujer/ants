@@ -7,6 +7,7 @@ import { useImmerReducer } from 'use-immer';
 import { gameStateReducer, getInitialState } from './GameStateReducer';
 import { Card } from './Card';
 import { Player } from './Player';
+import { Cards } from './Cards';
 
 const App: React.FC = () => {
     const [gameState, dispatch] = useImmerReducer(gameStateReducer, getInitialState());
@@ -18,18 +19,14 @@ const App: React.FC = () => {
         });
     }
 
-    const playerBlackCards = gameState.playerBlack.cards.map((card) => {
-        return <CardComponent key={card.getId()} card={card} playCardHandler={() => playCard(card)} />;
-    });
-
-    const playerRedCards = gameState.playerRed.cards.map((card) => {
-        return <CardComponent key={card.getId()} card={card} playCardHandler={() => playCard(card)} />;
-    });
+    const cardsInHand =
+        gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack.cards : gameState.playerRed.cards;
 
     return (
         <>
             <div className="game">
                 <PlayerDashboard
+                    isOnTurn={gameState.playerOnTurn === Player.BLACK_ANTS}
                     builders={gameState.playerBlack.builders}
                     bricks={gameState.playerBlack.bricks}
                     soldiers={gameState.playerBlack.soldiers}
@@ -40,8 +37,16 @@ const App: React.FC = () => {
                     wall={gameState.playerBlack.wall}
                 />
                 <Castle castle={gameState.playerBlack.castle} wall={gameState.playerBlack.wall} />
+                {gameState.discardedCard !== undefined ? (
+                    <CardComponent
+                        key={gameState.discardedCard.getId()}
+                        card={gameState.discardedCard}
+                        playCardHandler={() => {}}
+                    />
+                ) : null}
                 <Castle castle={gameState.playerRed.castle} wall={gameState.playerRed.wall} />
                 <PlayerDashboard
+                    isOnTurn={gameState.playerOnTurn === Player.RED_ANTS}
                     builders={gameState.playerRed.builders}
                     bricks={gameState.playerRed.bricks}
                     soldiers={gameState.playerRed.soldiers}
@@ -52,24 +57,7 @@ const App: React.FC = () => {
                     wall={gameState.playerRed.wall}
                 />
             </div>
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    opacity: gameState.playerOnTurn !== Player.BLACK_ANTS ? 0.3 : 1,
-                }}
-            >
-                {playerBlackCards}
-            </div>
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    opacity: gameState.playerOnTurn !== Player.RED_ANTS ? 0.3 : 1,
-                }}
-            >
-                {playerRedCards}
-            </div>
+            <Cards cardsInHand={cardsInHand} playCardHandler={(card: Card) => playCard(card)} />
         </>
     );
 };
