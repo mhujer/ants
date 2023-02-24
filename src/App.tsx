@@ -19,10 +19,28 @@ const App: React.FC = () => {
         });
     }
 
+    function discardCard(card: Card) {
+        dispatch({
+            type: 'discardCard',
+            card: card,
+        });
+    }
+
+    let playerWonContent = null;
+    if (gameState.playerWon !== undefined) {
+        if (gameState.playerWon === Player.BLACK_ANTS) {
+            playerWonContent = <h1>Černí mravenci vyhráli!</h1>;
+        }
+        if (gameState.playerWon === Player.RED_ANTS) {
+            playerWonContent = <h1>Červení mravenci vyhráli!</h1>;
+        }
+    }
+
     const playerOnTurnData = gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack : gameState.playerRed;
 
     return (
         <>
+            {playerWonContent}
             <div className="game">
                 <PlayerDashboard
                     isOnTurn={gameState.playerOnTurn === Player.BLACK_ANTS}
@@ -36,8 +54,8 @@ const App: React.FC = () => {
                     wall={gameState.playerBlack.wall}
                 />
                 <Castle castle={gameState.playerBlack.castle} wall={gameState.playerBlack.wall} />
-                {gameState.discardedCard !== undefined ? (
-                    <CardComponent key={gameState.discardedCard.getId()} card={gameState.discardedCard} />
+                {gameState.lastPlayedCard !== undefined ? (
+                    <CardComponent key={gameState.lastPlayedCard.getId()} card={gameState.lastPlayedCard} />
                 ) : null}
                 <Castle castle={gameState.playerRed.castle} wall={gameState.playerRed.wall} />
                 <PlayerDashboard
@@ -60,6 +78,7 @@ const App: React.FC = () => {
                 }}
                 cardsInHand={playerOnTurnData.cards}
                 playCardHandler={(card: Card) => playCard(card)}
+                discardCardHandler={(card: Card) => discardCard(card)}
             />
         </>
     );

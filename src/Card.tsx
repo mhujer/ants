@@ -3,6 +3,7 @@ import { CardDefinition, cardDefinitions } from './CardDefinitions';
 export class Card {
     private readonly id: string;
     private readonly type: CardDefinition;
+    private discarded: boolean = false;
 
     constructor(type: CardDefinition) {
         this.id = crypto.randomUUID();
@@ -15,6 +16,14 @@ export class Card {
 
     getType(): CardDefinition {
         return this.type;
+    }
+
+    wasDiscarded(): boolean {
+        return this.discarded;
+    }
+
+    markAsDiscarded(): void {
+        this.discarded = true;
     }
 }
 

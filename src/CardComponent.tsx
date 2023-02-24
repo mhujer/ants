@@ -37,6 +37,7 @@ export const CardComponent: React.FC<Props> = ({ card }) => {
                 margin: 10,
             }}
         >
+            {card.wasDiscarded() && <h4>ODHOZENO</h4>}
             <ResourceIcon resourceType={cardRequirementsType} />
             <div>{cardRequirementsAmount}</div>
             <h1>{cardDefinition.name}</h1>

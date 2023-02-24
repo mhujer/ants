@@ -16,14 +16,10 @@ interface PlayerGameState {
 
 interface GameState {
     readonly playerOnTurn: Player;
-    discardedCard?: Card;
+    readonly playerWon?: Player;
+    lastPlayedCard?: Card;
     readonly playerBlack: PlayerGameState;
     readonly playerRed: PlayerGameState;
-}
-
-interface PlayCardAction {
-    type: 'playCard';
-    card: Card;
 }
 
 const minimalGameStateValues = {
@@ -37,11 +33,26 @@ const minimalGameStateValues = {
     wall: 0,
 };
 
-type GameAction = PlayCardAction;
+interface PlayCardAction {
+    type: 'playCard';
+    card: Card;
+}
+
+interface DiscardCardAction {
+    type: 'discardCard';
+    card: Card;
+}
+
+type GameAction = PlayCardAction | DiscardCardAction;
 
 export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction): void => {
     switch (action.type) {
         case 'playCard': {
+            if (gameState.playerWon !== undefined) {
+                console.error('Game is over!');
+                return;
+            }
+
             const card = action.card;
             const cardDefinition = card.getType();
 
@@ -180,7 +191,42 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
             }
 
             // draw a new card
-            gameState.discardedCard = card;
+            gameState.lastPlayedCard = card;
+            const playedCardIndex = playerState.cards.indexOf(card);
+            playerState.cards[playedCardIndex] = generateCard();
+
+            if (playerState.castle >= 100) {
+                gameState.playerWon = gameState.playerOnTurn;
+            }
+
+            // next turn
+            const nextPlayerState =
+                gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerRed : gameState.playerBlack;
+            nextPlayerState.bricks += nextPlayerState.builders;
+            nextPlayerState.weapons += nextPlayerState.soldiers;
+            nextPlayerState.crystals += nextPlayerState.mages;
+
+            gameState.playerOnTurn = gameState.playerOnTurn === Player.BLACK_ANTS ? Player.RED_ANTS : Player.BLACK_ANTS;
+
+            break;
+        }
+
+        case 'discardCard': {
+            if (gameState.playerWon !== undefined) {
+                console.error('Game is over!');
+                return;
+            }
+
+            const card = action.card;
+
+            const playerState =
+                gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack : gameState.playerRed;
+
+            card.markAsDiscarded();
+
+            // @todo this case is monstly duplicated
+            // draw a new card
+            gameState.lastPlayedCard = card;
             const playedCardIndex = playerState.cards.indexOf(card);
             playerState.cards[playedCardIndex] = generateCard();
 
@@ -197,6 +243,8 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
         }
 
         default: {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             throw new Error(`Uhandled "${action.type}"!`);
         }
@@ -208,9 +256,9 @@ export function getInitialState(): GameState {
         playerOnTurn: Player.BLACK_ANTS,
         playerBlack: {
             builders: 2,
-            bricks: 8,
+            bricks: 5,
             soldiers: 2,
-            weapons: 7,
+            weapons: 5,
             mages: 2,
             crystals: 5,
             castle: 30,
@@ -228,12 +276,12 @@ export function getInitialState(): GameState {
         },
         playerRed: {
             builders: 2,
-            bricks: 8,
+            bricks: 5,
             soldiers: 2,
-            weapons: 7,
+            weapons: 5,
             mages: 2,
             crystals: 5,
-            castle: 20,
+            castle: 30,
             wall: 10,
             cards: [
                 generateCard(),

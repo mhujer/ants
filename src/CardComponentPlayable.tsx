@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { Card } from './Card';
 import { CardComponent } from './CardComponent';
 
@@ -11,22 +11,41 @@ export interface PlayerResources {
 interface Props {
     playerResources: PlayerResources;
     card: Card;
-    playCardHandler: (() => void) | undefined;
+    playCardHandler: () => void;
+    discardCardHandler: () => void;
 }
 
-export const CardComponentPlayable: React.FC<Props> = ({ playerResources, card, playCardHandler }) => {
+export const CardComponentPlayable: React.FC<Props> = ({
+    playerResources,
+    card,
+    playCardHandler,
+    discardCardHandler,
+}) => {
     const isCardPlayable = canBeCardPlayed(playerResources, card);
+
+    function clickHandler(e: MouseEvent) {
+        e.preventDefault();
+        if (e.type === 'click') {
+            playCardHandler();
+            return;
+        }
+        if (e.type === 'contextmenu') {
+            discardCardHandler();
+            return;
+        }
+        console.dir(e);
+    }
 
     if (isCardPlayable) {
         return (
-            <div onClick={playCardHandler}>
+            <div onClick={clickHandler} onContextMenu={clickHandler}>
                 <CardComponent card={card} />
             </div>
         );
     }
 
     return (
-        <div className="not-playable">
+        <div className="not-playable" onContextMenu={clickHandler}>
             <CardComponent card={card} />
         </div>
     );

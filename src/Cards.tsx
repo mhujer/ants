@@ -6,9 +6,10 @@ interface Props {
     playerResources: PlayerResources;
     cardsInHand: Card[];
     playCardHandler: (card: Card) => void;
+    discardCardHandler: (card: Card) => void;
 }
 
-export const Cards: React.FC<Props> = ({ playerResources, cardsInHand, playCardHandler }) => {
+export const Cards: React.FC<Props> = ({ playerResources, cardsInHand, playCardHandler, discardCardHandler }) => {
     const cards = cardsInHand.map((card) => {
         return (
             <CardComponentPlayable
@@ -16,6 +17,7 @@ export const Cards: React.FC<Props> = ({ playerResources, cardsInHand, playCardH
                 card={card}
                 playerResources={playerResources}
                 playCardHandler={() => playCardHandler(card)}
+                discardCardHandler={() => discardCardHandler(card)}
             />
         );
     });
