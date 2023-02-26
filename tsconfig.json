@@ -21,7 +21,7 @@
         "exactOptionalPropertyTypes": true,
         "noImplicitOverride": true,
         "noImplicitReturns": true,
-        "noPropertyAccessFromIndexSignature": true,
+        //"noPropertyAccessFromIndexSignature": true, //does not play nice with CSS modules
         "noUncheckedIndexedAccess": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true

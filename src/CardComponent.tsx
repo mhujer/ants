@@ -2,6 +2,7 @@ import React from 'react';
 import { ResourceIcon } from './ResourceIcon';
 import { Card } from './Card';
 import { ResourceType } from './ResourceType';
+import css from './CardComponent.module.scss';
 
 interface Props {
     card: Card;
@@ -27,16 +28,7 @@ export const CardComponent: React.FC<Props> = ({ card }) => {
     }
 
     return (
-        <div
-            style={{
-                width: '7em',
-                height: '12em',
-                border: '1px dotted silver',
-                borderRadius: 15,
-                padding: 10,
-                margin: 10,
-            }}
-        >
+        <div className={css.cardXyz}>
             {card.wasDiscarded() && <h4>ODHOZENO</h4>}
             <ResourceIcon resourceType={cardRequirementsType} />
             <div>{cardRequirementsAmount}</div>
