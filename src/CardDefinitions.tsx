@@ -1,7 +1,39 @@
+import wallImage from './assets/images/cards/wall.png';
+import foundationsImage from './assets/images/cards/foundations.png';
+import defenseImage from './assets/images/cards/defense.png';
+import reserveImage from './assets/images/cards/reserve.png';
+import towerImage from './assets/images/cards/tower.png';
+import schoolImage from './assets/images/cards/school.png';
+import wainImage from './assets/images/cards/wain.png';
+import fenceImage from './assets/images/cards/fence.png';
+import fortImage from './assets/images/cards/fort.png';
+import babylonImage from './assets/images/cards/babylon.png';
+import archerImage from './assets/images/cards/archer.png';
+import knightImage from './assets/images/cards/knight.png';
+import riderImage from './assets/images/cards/rider.png';
+import platoonImage from './assets/images/cards/platoon.png';
+import recruitImage from './assets/images/cards/recruit.png';
+import attackImage from './assets/images/cards/attack.png';
+import saboteurImage from './assets/images/cards/saboteur.png';
+import thiefImage from './assets/images/cards/thief.png';
+import SWATImage from './assets/images/cards/SWAT.png';
+import BansheeImage from './assets/images/cards/Banshee.png';
+import conjureBricksImage from './assets/images/cards/conjureBricks.png';
+import destroyBricksImage from './assets/images/cards/destroyBricks.png';
+import conjureWeaponsImage from './assets/images/cards/conjureWeapons.png';
+import destroyWeaponsImage from './assets/images/cards/destroyWeapons.png';
+import conjureCrystalsImage from './assets/images/cards/conjureCrystals.png';
+import destroyCrystalsImage from './assets/images/cards/destroyCrystals.png';
+import sorcererImage from './assets/images/cards/sorcerer.png';
+import dragonImage from './assets/images/cards/dragon.png';
+import pixiesImage from './assets/images/cards/pixies.png';
+import curseImage from './assets/images/cards/curse.png';
+
 export interface CardDefinition {
     id: string;
     name: string;
     description: string;
+    imageUrl: string;
     requiredResources: {
         bricks?: number;
         weapons?: number;
@@ -38,6 +70,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'wall',
         name: 'Zeď',
         description: 'Zeď +3',
+        imageUrl: wallImage,
         requiredResources: {
             bricks: 1,
         },
@@ -51,6 +84,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'foundations', // original "base"
         name: 'Základy',
         description: 'Hrad +2',
+        imageUrl: foundationsImage,
         requiredResources: {
             bricks: 1,
         },
@@ -64,6 +98,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'defense',
         name: 'Obrana',
         description: 'Zeď +6',
+        imageUrl: defenseImage,
         requiredResources: {
             bricks: 3,
         },
@@ -77,6 +112,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'reserve',
         name: 'Rezervy',
         description: 'Hrad +8, Zeď -4',
+        imageUrl: reserveImage,
         requiredResources: {
             bricks: 3,
         },
@@ -91,6 +127,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'tower',
         name: 'Věž',
         description: 'Hrad +5',
+        imageUrl: towerImage,
         requiredResources: {
             bricks: 5,
         },
@@ -104,6 +141,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'school',
         name: 'Škola',
         description: 'Stavitelé +1',
+        imageUrl: schoolImage,
         requiredResources: {
             bricks: 8,
         },
@@ -117,6 +155,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'wain',
         name: 'Povoz',
         description: 'Hrad +8, hrad soupeře -4',
+        imageUrl: wainImage,
         requiredResources: {
             bricks: 10,
         },
@@ -133,6 +172,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'fence',
         name: 'Hradba',
         description: 'Zeď +22',
+        imageUrl: fenceImage,
         requiredResources: {
             bricks: 12,
         },
@@ -146,6 +186,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'fort',
         name: 'Pevnost',
         description: 'Hrad +20',
+        imageUrl: fortImage,
         requiredResources: {
             bricks: 18,
         },
@@ -159,6 +200,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'babylon',
         name: 'Babylon',
         description: 'Hrad +32',
+        imageUrl: babylonImage,
         requiredResources: {
             bricks: 39,
         },
@@ -173,6 +215,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'archer',
         name: 'Střelec',
         description: 'Útok 2',
+        imageUrl: archerImage,
         requiredResources: {
             weapons: 1,
         },
@@ -186,6 +229,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'knight',
         name: 'Rytíř',
         description: 'Útok 3',
+        imageUrl: knightImage,
         requiredResources: {
             weapons: 2,
         },
@@ -199,6 +243,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'rider',
         name: 'Jezdec',
         description: 'Útok 4',
+        imageUrl: riderImage,
         requiredResources: {
             weapons: 2,
         },
@@ -212,6 +257,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'platoon',
         name: 'Četa',
         description: 'Útok 6',
+        imageUrl: platoonImage,
         requiredResources: {
             weapons: 4,
         },
@@ -225,6 +271,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'recruit',
         name: 'Nábor',
         description: 'Vojáci +1',
+        imageUrl: recruitImage,
         requiredResources: {
             weapons: 8,
         },
@@ -238,6 +285,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'attack',
         name: 'Zteč',
         description: 'Útok 12',
+        imageUrl: attackImage,
         requiredResources: {
             weapons: 10,
         },
@@ -251,6 +299,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'saboteur',
         name: 'Sabotér',
         description: 'Zásoby soupeře -4',
+        imageUrl: saboteurImage,
         requiredResources: {
             weapons: 12,
         },
@@ -266,6 +315,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'thief',
         name: 'Zloděj',
         description: 'Převod zásob soupeře 5',
+        imageUrl: thiefImage,
         requiredResources: {
             weapons: 15,
         },
@@ -286,6 +336,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'SWAT',
         name: 'SWAT',
         description: 'Hrad soupeře -10',
+        imageUrl: SWATImage,
         requiredResources: {
             weapons: 18,
         },
@@ -299,6 +350,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'Banshee',
         name: 'Smrtka',
         description: 'Útok 32',
+        imageUrl: BansheeImage,
         requiredResources: {
             weapons: 28,
         },
@@ -313,6 +365,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'conjureBricks',
         name: 'Čaruj cihly',
         description: 'Cihly +8',
+        imageUrl: conjureBricksImage,
         requiredResources: {
             crystals: 8,
         },
@@ -326,6 +379,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'destroyBricks', // original "crush bricks"
         name: 'Znič cihly',
         description: 'Cihly soupeře -8',
+        imageUrl: destroyBricksImage,
         requiredResources: {
             crystals: 8,
         },
@@ -339,6 +393,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'conjureWeapons',
         name: 'Čaruj zbraně',
         description: 'Zbraně +8',
+        imageUrl: conjureWeaponsImage,
         requiredResources: {
             crystals: 8,
         },
@@ -352,6 +407,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'destroyWeapons', // original "crush weapons"
         name: 'Znič zbraně',
         description: 'Zbraně soupeře -8',
+        imageUrl: destroyWeaponsImage,
         requiredResources: {
             crystals: 8,
         },
@@ -365,6 +421,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'conjureCrystals',
         name: 'Čaruj krystaly',
         description: 'Krystaly +8',
+        imageUrl: conjureCrystalsImage,
         requiredResources: {
             crystals: 4,
         },
@@ -378,6 +435,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'destroyCrystals', // original "crush crystals"
         name: 'Znič krystaly',
         description: 'Krystaly soupeře -8',
+        imageUrl: destroyCrystalsImage,
         requiredResources: {
             crystals: 4,
         },
@@ -391,6 +449,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'sorcerer',
         name: 'Čaroděj',
         description: 'Mágové +1',
+        imageUrl: sorcererImage,
         requiredResources: {
             crystals: 8,
         },
@@ -404,6 +463,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'dragon',
         name: 'Drak',
         description: 'Útok 25',
+        imageUrl: dragonImage,
         requiredResources: {
             crystals: 21,
         },
@@ -417,6 +477,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'pixies',
         name: 'Skřítci',
         description: 'Hrad +22',
+        imageUrl: pixiesImage,
         requiredResources: {
             crystals: 22,
         },
@@ -430,6 +491,7 @@ export const cardDefinitions: CardDefinition[] = [
         id: 'curse',
         name: 'Kletba',
         description: 'Vše +1, vše soupeře -1',
+        imageUrl: curseImage,
         requiredResources: {
             crystals: 25,
         },

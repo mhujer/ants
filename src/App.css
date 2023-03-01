@@ -6,6 +6,7 @@
 .playerDashboard {
     flex: 2;
     opacity: 0.5;
+    max-width: 15em;
 }
 
 .playerDashboard.is-on-turn {

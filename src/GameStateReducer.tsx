@@ -198,6 +198,9 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
             if (playerState.castle >= 100) {
                 gameState.playerWon = gameState.playerOnTurn;
             }
+            if (opponentState.castle <= 0) {
+                gameState.playerWon = gameState.playerOnTurn;
+            }
 
             // next turn
             const nextPlayerState =

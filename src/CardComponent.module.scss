@@ -1,8 +1,28 @@
+@import '_vars.scss';
+
 .card-xyz {
     width: 7em;
     height: 12em;
-    border: 1px dotted silver;
+    min-width: 7em;
+    max-width: 7em;
+    border: 6px solid silver;
     border-radius: 15px;
     padding: 10px;
     margin: 5px;
+    text-align: center;
+}
+
+.card-building {
+    background-color: $cardBuildingBackgroundColor;
+    border-color: $cardBuildingBorderColor;
+}
+
+.card-army {
+    background-color: $cardArmyBackgroundColor;
+    border-color: $cardArmyBorderColor;
+}
+
+.card-magic {
+    background-color: $cardMagicBackgroundColor;
+    border-color: $cardMagicBorderColor;
 }

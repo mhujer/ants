@@ -8,6 +8,7 @@ import { gameStateReducer, getInitialState } from './GameStateReducer';
 import { Card } from './Card';
 import { Player } from './Player';
 import { Cards } from './Cards';
+import { cardDefinitions } from './CardDefinitions';
 
 const App: React.FC = () => {
     const [gameState, dispatch] = useImmerReducer(gameStateReducer, getInitialState());
@@ -37,6 +38,9 @@ const App: React.FC = () => {
     }
 
     const playerOnTurnData = gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack : gameState.playerRed;
+
+    const allCards = cardDefinitions.map((cardDefinition) => new Card(cardDefinition));
+    const allCardsComponents = allCards.map((card) => <CardComponent card={card} key={card.getId()} />);
 
     return (
         <>
@@ -80,6 +84,7 @@ const App: React.FC = () => {
                 playCardHandler={(card: Card) => playCard(card)}
                 discardCardHandler={(card: Card) => discardCard(card)}
             />
+            <div style={{ display: 'flex', flexDirection: 'row' }}>{allCardsComponents}</div>
         </>
     );
 };
