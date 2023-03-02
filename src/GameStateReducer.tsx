@@ -1,6 +1,7 @@
 import { Draft } from 'immer';
 import { Card, generateCard } from './Card';
 import { Player } from './Player';
+import { Sound } from './Sounds';
 
 interface PlayerGameState {
     readonly builders: number;
@@ -20,6 +21,7 @@ interface GameState {
     lastPlayedCard?: Card;
     readonly playerBlack: PlayerGameState;
     readonly playerRed: PlayerGameState;
+    playSound: Sound | null;
 }
 
 const minimalGameStateValues = {
@@ -43,7 +45,11 @@ interface DiscardCardAction {
     card: Card;
 }
 
-type GameAction = PlayCardAction | DiscardCardAction;
+interface SoundPlayedAction {
+    type: 'SOUND_PLAYED';
+}
+
+type GameAction = PlayCardAction | DiscardCardAction | SoundPlayedAction;
 
 export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction): void => {
     switch (action.type) {
@@ -129,6 +135,8 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
                 }
             }
 
+            let wasCastleAttacked = false;
+
             if (cardDefinition.impact.opponent !== undefined) {
                 if (cardDefinition.impact.opponent.attack !== undefined) {
                     const attack = cardDefinition.impact.opponent.attack;
@@ -136,6 +144,7 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
                     let attackEffectOnCastle = 0;
                     if (attackEffectOnWall < attack) {
                         attackEffectOnCastle = attack - attackEffectOnWall;
+                        wasCastleAttacked = true;
                     }
                     opponentState.wall -= attackEffectOnWall;
                     opponentState.castle -= attackEffectOnCastle;
@@ -211,6 +220,13 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
 
             gameState.playerOnTurn = gameState.playerOnTurn === Player.BLACK_ANTS ? Player.RED_ANTS : Player.BLACK_ANTS;
 
+            // if the attack overflows from wall to castle, play sound of castle being destroyed
+            if (cardDefinition.sound === Sound.DESTROY_WALL && wasCastleAttacked) {
+                gameState.playSound = Sound.DESTROY_CASTLE;
+            } else {
+                gameState.playSound = cardDefinition.sound;
+            }
+
             break;
         }
 
@@ -242,6 +258,11 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
 
             gameState.playerOnTurn = gameState.playerOnTurn === Player.BLACK_ANTS ? Player.RED_ANTS : Player.BLACK_ANTS;
 
+            break;
+        }
+
+        case 'SOUND_PLAYED': {
+            gameState.playSound = null;
             break;
         }
 
@@ -297,5 +318,6 @@ export function getInitialState(): GameState {
                 generateCard(),
             ],
         },
+        playSound: null,
     };
 }

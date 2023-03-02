@@ -28,12 +28,14 @@ import sorcererImage from './assets/images/cards/sorcerer.png';
 import dragonImage from './assets/images/cards/dragon.png';
 import pixiesImage from './assets/images/cards/pixies.png';
 import curseImage from './assets/images/cards/curse.png';
+import { Sound } from './Sounds';
 
 export interface CardDefinition {
     id: string;
     name: string;
     description: string;
     imageUrl: string;
+    sound: Sound;
     requiredResources: {
         bricks?: number;
         weapons?: number;
@@ -71,6 +73,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Zeď',
         description: 'Zeď +3',
         imageUrl: wallImage,
+        sound: Sound.BUILD_WALL,
         requiredResources: {
             bricks: 1,
         },
@@ -85,6 +88,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Základy',
         description: 'Hrad +2',
         imageUrl: foundationsImage,
+        sound: Sound.BUILD_CASTLE,
         requiredResources: {
             bricks: 1,
         },
@@ -99,6 +103,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Obrana',
         description: 'Zeď +6',
         imageUrl: defenseImage,
+        sound: Sound.BUILD_WALL,
         requiredResources: {
             bricks: 3,
         },
@@ -113,6 +118,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Rezervy',
         description: 'Hrad +8, Zeď -4',
         imageUrl: reserveImage,
+        sound: Sound.BUILD_CASTLE,
         requiredResources: {
             bricks: 3,
         },
@@ -128,6 +134,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Věž',
         description: 'Hrad +5',
         imageUrl: towerImage,
+        sound: Sound.BUILD_CASTLE,
         requiredResources: {
             bricks: 5,
         },
@@ -142,6 +149,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Škola',
         description: 'Stavitelé +1',
         imageUrl: schoolImage,
+        sound: Sound.BOOST_POWER,
         requiredResources: {
             bricks: 8,
         },
@@ -156,6 +164,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Povoz',
         description: 'Hrad +8, hrad soupeře -4',
         imageUrl: wainImage,
+        sound: Sound.BUILD_CASTLE,
         requiredResources: {
             bricks: 10,
         },
@@ -173,6 +182,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Hradba',
         description: 'Zeď +22',
         imageUrl: fenceImage,
+        sound: Sound.BUILD_WALL,
         requiredResources: {
             bricks: 12,
         },
@@ -187,6 +197,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Pevnost',
         description: 'Hrad +20',
         imageUrl: fortImage,
+        sound: Sound.BUILD_CASTLE,
         requiredResources: {
             bricks: 18,
         },
@@ -201,6 +212,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Babylon',
         description: 'Hrad +32',
         imageUrl: babylonImage,
+        sound: Sound.BUILD_CASTLE,
         requiredResources: {
             bricks: 39,
         },
@@ -216,6 +228,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Střelec',
         description: 'Útok 2',
         imageUrl: archerImage,
+        sound: Sound.DESTROY_WALL,
         requiredResources: {
             weapons: 1,
         },
@@ -230,6 +243,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Rytíř',
         description: 'Útok 3',
         imageUrl: knightImage,
+        sound: Sound.DESTROY_WALL,
         requiredResources: {
             weapons: 2,
         },
@@ -244,6 +258,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Jezdec',
         description: 'Útok 4',
         imageUrl: riderImage,
+        sound: Sound.DESTROY_WALL,
         requiredResources: {
             weapons: 2,
         },
@@ -258,6 +273,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Četa',
         description: 'Útok 6',
         imageUrl: platoonImage,
+        sound: Sound.DESTROY_WALL,
         requiredResources: {
             weapons: 4,
         },
@@ -272,6 +288,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Nábor',
         description: 'Vojáci +1',
         imageUrl: recruitImage,
+        sound: Sound.BOOST_POWER,
         requiredResources: {
             weapons: 8,
         },
@@ -286,6 +303,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Zteč',
         description: 'Útok 12',
         imageUrl: attackImage,
+        sound: Sound.DESTROY_WALL,
         requiredResources: {
             weapons: 10,
         },
@@ -300,6 +318,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Sabotér',
         description: 'Zásoby soupeře -4',
         imageUrl: saboteurImage,
+        sound: Sound.DESTROY_STOCK,
         requiredResources: {
             weapons: 12,
         },
@@ -316,6 +335,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Zloděj',
         description: 'Převod zásob soupeře 5',
         imageUrl: thiefImage,
+        sound: Sound.INCREASE_STOCK,
         requiredResources: {
             weapons: 15,
         },
@@ -337,6 +357,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'SWAT',
         description: 'Hrad soupeře -10',
         imageUrl: SWATImage,
+        sound: Sound.DESTROY_CASTLE,
         requiredResources: {
             weapons: 18,
         },
@@ -351,6 +372,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Smrtka',
         description: 'Útok 32',
         imageUrl: BansheeImage,
+        sound: Sound.DESTROY_WALL,
         requiredResources: {
             weapons: 28,
         },
@@ -366,6 +388,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Čaruj cihly',
         description: 'Cihly +8',
         imageUrl: conjureBricksImage,
+        sound: Sound.INCREASE_STOCK,
         requiredResources: {
             crystals: 8,
         },
@@ -380,6 +403,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Znič cihly',
         description: 'Cihly soupeře -8',
         imageUrl: destroyBricksImage,
+        sound: Sound.DESTROY_STOCK,
         requiredResources: {
             crystals: 8,
         },
@@ -394,6 +418,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Čaruj zbraně',
         description: 'Zbraně +8',
         imageUrl: conjureWeaponsImage,
+        sound: Sound.INCREASE_STOCK,
         requiredResources: {
             crystals: 8,
         },
@@ -408,6 +433,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Znič zbraně',
         description: 'Zbraně soupeře -8',
         imageUrl: destroyWeaponsImage,
+        sound: Sound.DESTROY_STOCK,
         requiredResources: {
             crystals: 8,
         },
@@ -422,6 +448,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Čaruj krystaly',
         description: 'Krystaly +8',
         imageUrl: conjureCrystalsImage,
+        sound: Sound.INCREASE_STOCK,
         requiredResources: {
             crystals: 4,
         },
@@ -436,6 +463,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Znič krystaly',
         description: 'Krystaly soupeře -8',
         imageUrl: destroyCrystalsImage,
+        sound: Sound.DESTROY_STOCK,
         requiredResources: {
             crystals: 4,
         },
@@ -450,6 +478,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Čaroděj',
         description: 'Mágové +1',
         imageUrl: sorcererImage,
+        sound: Sound.BOOST_POWER,
         requiredResources: {
             crystals: 8,
         },
@@ -464,6 +493,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Drak',
         description: 'Útok 25',
         imageUrl: dragonImage,
+        sound: Sound.DESTROY_WALL,
         requiredResources: {
             crystals: 21,
         },
@@ -478,6 +508,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Skřítci',
         description: 'Hrad +22',
         imageUrl: pixiesImage,
+        sound: Sound.BUILD_CASTLE,
         requiredResources: {
             crystals: 22,
         },
@@ -492,6 +523,7 @@ export const cardDefinitions: CardDefinition[] = [
         name: 'Kletba',
         description: 'Vše +1, vše soupeře -1',
         imageUrl: curseImage,
+        sound: Sound.CURSE,
         requiredResources: {
             crystals: 25,
         },

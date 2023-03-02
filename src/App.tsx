@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PlayerDashboard } from './PlayerDashboard';
 import { Castle } from './Castle';
 import './App.css';
@@ -9,9 +9,33 @@ import { Card } from './Card';
 import { Player } from './Player';
 import { Cards } from './Cards';
 import { cardDefinitions } from './CardDefinitions';
+import { playSound, Sound } from './Sounds';
 
 const App: React.FC = () => {
     const [gameState, dispatch] = useImmerReducer(gameStateReducer, getInitialState());
+
+    // play sound
+    useEffect(() => {
+        setTimeout(() => {
+            if (gameState.playSound !== null) {
+                playSound(gameState.playSound);
+                dispatch({
+                    type: 'SOUND_PLAYED',
+                });
+                // deal new card
+                setTimeout(() => {
+                    playSound(Sound.CARD_PLAYED);
+                }, 500);
+            }
+        }, 500);
+    }, [gameState.playSound]);
+
+    // play card sound
+    useEffect(() => {
+        if (gameState.lastPlayedCard !== undefined) {
+            playSound(Sound.CARD_PLAYED);
+        }
+    }, [gameState.lastPlayedCard]);
 
     function playCard(card: Card) {
         dispatch({
