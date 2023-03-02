@@ -199,6 +199,13 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
                 }
             }
 
+            // if the attack overflows from wall to castle, play sound of castle being destroyed
+            if (cardDefinition.sound === Sound.DESTROY_WALL && wasCastleAttacked) {
+                gameState.playSound = Sound.DESTROY_CASTLE;
+            } else {
+                gameState.playSound = cardDefinition.sound;
+            }
+
             // draw a new card
             gameState.lastPlayedCard = card;
             const playedCardIndex = playerState.cards.indexOf(card);
@@ -206,9 +213,11 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
 
             if (playerState.castle >= 100) {
                 gameState.playerWon = gameState.playerOnTurn;
+                gameState.playSound = Sound.FANFARE;
             }
             if (opponentState.castle <= 0) {
                 gameState.playerWon = gameState.playerOnTurn;
+                gameState.playSound = Sound.FANFARE;
             }
 
             // next turn
@@ -219,13 +228,6 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
             nextPlayerState.crystals += nextPlayerState.mages;
 
             gameState.playerOnTurn = gameState.playerOnTurn === Player.BLACK_ANTS ? Player.RED_ANTS : Player.BLACK_ANTS;
-
-            // if the attack overflows from wall to castle, play sound of castle being destroyed
-            if (cardDefinition.sound === Sound.DESTROY_WALL && wasCastleAttacked) {
-                gameState.playSound = Sound.DESTROY_CASTLE;
-            } else {
-                gameState.playSound = cardDefinition.sound;
-            }
 
             break;
         }

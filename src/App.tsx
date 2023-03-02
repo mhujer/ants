@@ -23,9 +23,9 @@ const App: React.FC = () => {
                     type: 'SOUND_PLAYED',
                 });
                 // deal new card
-                setTimeout(() => {
-                    playSound(Sound.CARD_PLAYED);
-                }, 500);
+                //setTimeout(() => {
+                //    playSound(Sound.CARD_PLAYED);
+                //}, 500);
             }
         }, 500);
     }, [gameState.playSound]);
@@ -63,8 +63,8 @@ const App: React.FC = () => {
 
     const playerOnTurnData = gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack : gameState.playerRed;
 
-    const allCards = cardDefinitions.map((cardDefinition) => new Card(cardDefinition));
-    const allCardsComponents = allCards.map((card) => <CardComponent card={card} key={card.getId()} />);
+    //const allCards = cardDefinitions.map((cardDefinition) => new Card(cardDefinition));
+    //const allCardsComponents = allCards.map((card) => <CardComponent card={card} key={card.getId()} />);
 
     return (
         <>
@@ -108,7 +108,7 @@ const App: React.FC = () => {
                 playCardHandler={(card: Card) => playCard(card)}
                 discardCardHandler={(card: Card) => discardCard(card)}
             />
-            <div style={{ display: 'flex', flexDirection: 'row' }}>{allCardsComponents}</div>
+            {/*<div style={{ display: 'flex', flexDirection: 'row' }}>{allCardsComponents}</div>*/}
         </>
     );
 };
