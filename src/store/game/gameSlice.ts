@@ -1,7 +1,9 @@
-import { Draft } from 'immer';
-import { Card, generateCard } from './Card';
-import { Player } from './Player';
-import { Sound } from './Sounds';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
+
+import { Card, generateCard } from '../../Card';
+import { Player } from '../../Player';
+import { Sound } from '../../Sounds';
 
 interface PlayerGameState {
     readonly builders: number;
@@ -15,7 +17,7 @@ interface PlayerGameState {
     readonly cards: Card[];
 }
 
-interface GameState {
+export interface GameState {
     readonly playerOnTurn: Player;
     readonly playerWon?: Player;
     lastPlayedCard?: Card;
@@ -24,48 +26,81 @@ interface GameState {
     playSound: Sound | null;
 }
 
-const minimalGameStateValues = {
-    builders: 1,
-    bricks: 0,
-    soldiers: 1,
-    weapons: 0,
-    mages: 1,
-    crystals: 0,
-    castle: 0,
-    wall: 0,
-};
+const initialState: GameState = getInitialState();
 
-interface PlayCardAction {
-    type: 'playCard';
-    card: Card;
+function getInitialState(): GameState {
+    return {
+        playerOnTurn: Player.BLACK_ANTS,
+        playerBlack: {
+            builders: 2,
+            bricks: 5,
+            soldiers: 2,
+            weapons: 5,
+            mages: 2,
+            crystals: 5,
+            castle: 30,
+            wall: 10,
+            cards: [
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+            ],
+        },
+        playerRed: {
+            builders: 2,
+            bricks: 5,
+            soldiers: 2,
+            weapons: 5,
+            mages: 2,
+            crystals: 5,
+            castle: 30,
+            wall: 10,
+            cards: [
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+                generateCard(),
+            ],
+        },
+        playSound: null,
+    };
 }
 
-interface DiscardCardAction {
-    type: 'discardCard';
-    card: Card;
-}
+export const gameSlice = createSlice({
+    name: 'game',
+    initialState,
+    reducers: {
+        playCard: (state, action: PayloadAction<Card>) => {
+            const minimalGameStateValues = {
+                builders: 1,
+                bricks: 0,
+                soldiers: 1,
+                weapons: 0,
+                mages: 1,
+                crystals: 0,
+                castle: 0,
+                wall: 0,
+            };
 
-interface SoundPlayedAction {
-    type: 'SOUND_PLAYED';
-}
-
-type GameAction = PlayCardAction | DiscardCardAction | SoundPlayedAction;
-
-export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction): void => {
-    switch (action.type) {
-        case 'playCard': {
-            if (gameState.playerWon !== undefined) {
+            if (state.playerWon !== undefined) {
                 console.error('Game is over!');
                 return;
             }
 
-            const card = action.card;
-            const cardDefinition = card.getType();
+            const card = action.payload;
+            const cardDefinition = card.type;
 
-            const playerState =
-                gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack : gameState.playerRed;
-            const opponentState =
-                gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerRed : gameState.playerBlack;
+            const playerState = state.playerOnTurn === Player.BLACK_ANTS ? state.playerBlack : state.playerRed;
+            const opponentState = state.playerOnTurn === Player.BLACK_ANTS ? state.playerRed : state.playerBlack;
 
             if (cardDefinition.requiredResources.bricks !== undefined) {
                 if (playerState.bricks < cardDefinition.requiredResources.bricks) {
@@ -201,125 +236,68 @@ export const gameStateReducer = (gameState: Draft<GameState>, action: GameAction
 
             // if the attack overflows from wall to castle, play sound of castle being destroyed
             if (cardDefinition.sound === Sound.DESTROY_WALL && wasCastleAttacked) {
-                gameState.playSound = Sound.DESTROY_CASTLE;
+                state.playSound = Sound.DESTROY_CASTLE;
             } else {
-                gameState.playSound = cardDefinition.sound;
+                state.playSound = cardDefinition.sound;
             }
 
             // draw a new card
-            gameState.lastPlayedCard = card;
+            state.lastPlayedCard = card;
             const playedCardIndex = playerState.cards.indexOf(card);
             playerState.cards[playedCardIndex] = generateCard();
 
             if (playerState.castle >= 100) {
-                gameState.playerWon = gameState.playerOnTurn;
-                gameState.playSound = Sound.FANFARE;
+                state.playerWon = state.playerOnTurn;
+                state.playSound = Sound.FANFARE;
             }
             if (opponentState.castle <= 0) {
-                gameState.playerWon = gameState.playerOnTurn;
-                gameState.playSound = Sound.FANFARE;
+                state.playerWon = state.playerOnTurn;
+                state.playSound = Sound.FANFARE;
             }
 
             // next turn
-            const nextPlayerState =
-                gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerRed : gameState.playerBlack;
+            const nextPlayerState = state.playerOnTurn === Player.BLACK_ANTS ? state.playerRed : state.playerBlack;
             nextPlayerState.bricks += nextPlayerState.builders;
             nextPlayerState.weapons += nextPlayerState.soldiers;
             nextPlayerState.crystals += nextPlayerState.mages;
 
-            gameState.playerOnTurn = gameState.playerOnTurn === Player.BLACK_ANTS ? Player.RED_ANTS : Player.BLACK_ANTS;
-
-            break;
-        }
-
-        case 'discardCard': {
-            if (gameState.playerWon !== undefined) {
+            state.playerOnTurn = state.playerOnTurn === Player.BLACK_ANTS ? Player.RED_ANTS : Player.BLACK_ANTS;
+        },
+        discardCard: (state, action: PayloadAction<Card>) => {
+            if (state.playerWon !== undefined) {
                 console.error('Game is over!');
                 return;
             }
 
-            const card = action.card;
+            const card = action.payload;
 
-            const playerState =
-                gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack : gameState.playerRed;
+            const playerState = state.playerOnTurn === Player.BLACK_ANTS ? state.playerBlack : state.playerRed;
 
-            card.markAsDiscarded();
+            card.discarded = true;
 
             // @todo this case is monstly duplicated
             // draw a new card
-            gameState.lastPlayedCard = card;
+            state.lastPlayedCard = card;
             const playedCardIndex = playerState.cards.indexOf(card);
             playerState.cards[playedCardIndex] = generateCard();
 
             // next turn
-            const nextPlayerState =
-                gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerRed : gameState.playerBlack;
+            const nextPlayerState = state.playerOnTurn === Player.BLACK_ANTS ? state.playerRed : state.playerBlack;
             nextPlayerState.bricks += nextPlayerState.builders;
             nextPlayerState.weapons += nextPlayerState.soldiers;
             nextPlayerState.crystals += nextPlayerState.mages;
 
-            gameState.playerOnTurn = gameState.playerOnTurn === Player.BLACK_ANTS ? Player.RED_ANTS : Player.BLACK_ANTS;
-
-            break;
-        }
-
-        case 'SOUND_PLAYED': {
-            gameState.playSound = null;
-            break;
-        }
-
-        default: {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            throw new Error(`Uhandled "${action.type}"!`);
-        }
-    }
-};
-
-export function getInitialState(): GameState {
-    return {
-        playerOnTurn: Player.BLACK_ANTS,
-        playerBlack: {
-            builders: 2,
-            bricks: 5,
-            soldiers: 2,
-            weapons: 5,
-            mages: 2,
-            crystals: 5,
-            castle: 30,
-            wall: 10,
-            cards: [
-                generateCard(),
-                generateCard(),
-                generateCard(),
-                generateCard(),
-                generateCard(),
-                generateCard(),
-                generateCard(),
-                generateCard(),
-            ],
+            state.playerOnTurn = state.playerOnTurn === Player.BLACK_ANTS ? Player.RED_ANTS : Player.BLACK_ANTS;
         },
-        playerRed: {
-            builders: 2,
-            bricks: 5,
-            soldiers: 2,
-            weapons: 5,
-            mages: 2,
-            crystals: 5,
-            castle: 30,
-            wall: 10,
-            cards: [
-                generateCard(),
-                generateCard(),
-                generateCard(),
-                generateCard(),
-                generateCard(),
-                generateCard(),
-                generateCard(),
-                generateCard(),
-            ],
+
+        playSound: (state) => {
+            state.playSound = null;
         },
-        playSound: null,
-    };
-}
+    },
+});
+
+export const { playCard, discardCard, playSound } = gameSlice.actions;
+
+export const selectGame = (state: RootState): GameState => state.game;
+
+export default gameSlice.reducer;

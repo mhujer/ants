@@ -3,25 +3,23 @@ import { PlayerDashboard } from './PlayerDashboard';
 import { Castle } from './Castle';
 import './App.css';
 import { CardComponent } from './CardComponent';
-import { useImmerReducer } from 'use-immer';
-import { gameStateReducer, getInitialState } from './GameStateReducer';
 import { Card } from './Card';
 import { Player } from './Player';
 import { Cards } from './Cards';
-import { cardDefinitions } from './CardDefinitions';
 import { playSound, Sound } from './Sounds';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { discardCard, playCard, playSound as playSoundAction, selectGame } from './store/game/gameSlice';
 
 const App: React.FC = () => {
-    const [gameState, dispatch] = useImmerReducer(gameStateReducer, getInitialState());
+    const gameState = useAppSelector(selectGame);
+    const dispatch = useAppDispatch();
 
     // play sound
     useEffect(() => {
         setTimeout(() => {
             if (gameState.playSound !== null) {
                 playSound(gameState.playSound);
-                dispatch({
-                    type: 'SOUND_PLAYED',
-                });
+                dispatch(playSoundAction());
                 // deal new card
                 //setTimeout(() => {
                 //    playSound(Sound.CARD_PLAYED);
@@ -37,18 +35,12 @@ const App: React.FC = () => {
         }
     }, [gameState.lastPlayedCard]);
 
-    function playCard(card: Card) {
-        dispatch({
-            type: 'playCard',
-            card: card,
-        });
+    function playCardHandler(card: Card) {
+        dispatch(playCard(card));
     }
 
-    function discardCard(card: Card) {
-        dispatch({
-            type: 'discardCard',
-            card: card,
-        });
+    function discardCardHandler(card: Card) {
+        dispatch(discardCard(card));
     }
 
     let playerWonContent = null;
@@ -64,7 +56,7 @@ const App: React.FC = () => {
     const playerOnTurnData = gameState.playerOnTurn === Player.BLACK_ANTS ? gameState.playerBlack : gameState.playerRed;
 
     //const allCards = cardDefinitions.map((cardDefinition) => new Card(cardDefinition));
-    //const allCardsComponents = allCards.map((card) => <CardComponent card={card} key={card.getId()} />);
+    //const allCardsComponents = allCards.map((card) => <CardComponent card={card} key={card.id} />);
 
     return (
         <>
@@ -83,7 +75,7 @@ const App: React.FC = () => {
                 />
                 <Castle castle={gameState.playerBlack.castle} wall={gameState.playerBlack.wall} />
                 {gameState.lastPlayedCard !== undefined ? (
-                    <CardComponent key={gameState.lastPlayedCard.getId()} card={gameState.lastPlayedCard} />
+                    <CardComponent key={gameState.lastPlayedCard.id} card={gameState.lastPlayedCard} />
                 ) : null}
                 <Castle castle={gameState.playerRed.castle} wall={gameState.playerRed.wall} />
                 <PlayerDashboard
@@ -105,8 +97,8 @@ const App: React.FC = () => {
                     crystals: playerOnTurnData.crystals,
                 }}
                 cardsInHand={playerOnTurnData.cards}
-                playCardHandler={(card: Card) => playCard(card)}
-                discardCardHandler={(card: Card) => discardCard(card)}
+                playCardHandler={(card: Card) => playCardHandler(card)}
+                discardCardHandler={(card: Card) => discardCardHandler(card)}
             />
             {/*<div style={{ display: 'flex', flexDirection: 'row' }}>{allCardsComponents}</div>*/}
         </>

@@ -3,31 +3,581 @@
 exports[`App > renders timer for 0 seconds 1`] = `
 [
   <div
-    style={
-      {
-        "border": "2px solid green",
-      }
-    }
+    className="game"
   >
-    <h1>
-      20
-    </h1>
-    <button
-      onClick={[Function]}
+    <div
+      className="playerDashboard is-on-turn"
     >
-      Build!
-    </button>
+      <div
+        className="playerStats"
+      >
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/builders.png"
+            />
+             
+            Stavitelé
+          </dt>
+          <dd>
+            2
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/bricks.png"
+            />
+             
+            Cihly
+          </dt>
+          <dd>
+            5
+          </dd>
+        </dl>
+      </div>
+      <div
+        className="playerStats"
+      >
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/soldiers.png"
+            />
+             
+            Vojáci
+          </dt>
+          <dd>
+            2
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/weapons.png"
+            />
+             
+            Zbraně
+          </dt>
+          <dd>
+            5
+          </dd>
+        </dl>
+      </div>
+      <div
+        className="playerStats"
+      >
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/mages.png"
+            />
+             
+            Mágové
+          </dt>
+          <dd>
+            2
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/crystals.png"
+            />
+             
+            Krystaly
+          </dt>
+          <dd>
+            5
+          </dd>
+        </dl>
+      </div>
+      <div
+        className="castleStats"
+      >
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/castle.png"
+            />
+             Hrad
+          </dt>
+          <dd>
+            30
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/wall.png"
+            />
+             Zeď
+          </dt>
+          <dd>
+            10
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <div>
+      <div
+        style={
+          {
+            "background": "silver",
+            "border": "1px solid gray",
+            "height": "150px",
+            "width": "8em",
+          }
+        }
+      >
+        Hrad 
+        30
+      </div>
+      <div
+        style={
+          {
+            "background": "brown",
+            "border": "1px solid black",
+            "height": "50px",
+            "width": "1em",
+          }
+        }
+      >
+        Hradba 
+        10
+      </div>
+    </div>
+    <div>
+      <div
+        style={
+          {
+            "background": "silver",
+            "border": "1px solid gray",
+            "height": "150px",
+            "width": "8em",
+          }
+        }
+      >
+        Hrad 
+        30
+      </div>
+      <div
+        style={
+          {
+            "background": "brown",
+            "border": "1px solid black",
+            "height": "50px",
+            "width": "1em",
+          }
+        }
+      >
+        Hradba 
+        10
+      </div>
+    </div>
+    <div
+      className="playerDashboard"
+    >
+      <div
+        className="playerStats"
+      >
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/builders.png"
+            />
+             
+            Stavitelé
+          </dt>
+          <dd>
+            2
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/bricks.png"
+            />
+             
+            Cihly
+          </dt>
+          <dd>
+            5
+          </dd>
+        </dl>
+      </div>
+      <div
+        className="playerStats"
+      >
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/soldiers.png"
+            />
+             
+            Vojáci
+          </dt>
+          <dd>
+            2
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/weapons.png"
+            />
+             
+            Zbraně
+          </dt>
+          <dd>
+            5
+          </dd>
+        </dl>
+      </div>
+      <div
+        className="playerStats"
+      >
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/mages.png"
+            />
+             
+            Mágové
+          </dt>
+          <dd>
+            2
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/crystals.png"
+            />
+             
+            Krystaly
+          </dt>
+          <dd>
+            5
+          </dd>
+        </dl>
+      </div>
+      <div
+        className="castleStats"
+      >
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/castle.png"
+            />
+             Hrad
+          </dt>
+          <dd>
+            30
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <img
+              src="/src/assets/images/dashboard-icons/wall.png"
+            />
+             Zeď
+          </dt>
+          <dd>
+            10
+          </dd>
+        </dl>
+      </div>
+    </div>
   </div>,
   <div
     style={
       {
-        "border": "",
+        "display": "flex",
+        "flexDirection": "row",
       }
     }
   >
-    <h1>
-      20
-    </h1>
+    <div
+      className="not-playable"
+      onContextMenu={[Function]}
+    >
+      <div
+        className="_cardXyz_84b332 _cardArmy_84b332"
+      >
+        <div>
+          <img
+            src="/src/assets/images/dashboard-icons/weapons.png"
+          />
+        </div>
+        <div>
+          18
+        </div>
+        <h4>
+          SWAT
+        </h4>
+        <div
+          style={
+            {
+              "backgroundImage": "url(\\"/src/assets/images/cards/SWAT.png\\")",
+              "backgroundPosition": "center",
+              "backgroundPositionY": -40,
+              "backgroundRepeat": "no-repeat",
+              "minHeight": 40,
+              "overflow": "hidden",
+            }
+          }
+        />
+        <small>
+          Hrad soupeře -10
+        </small>
+      </div>
+    </div>
+    <div
+      className="not-playable"
+      onContextMenu={[Function]}
+    >
+      <div
+        className="_cardXyz_84b332 _cardMagic_84b332"
+      >
+        <div>
+          <img
+            src="/src/assets/images/dashboard-icons/crystals.png"
+          />
+        </div>
+        <div>
+          8
+        </div>
+        <h4>
+          Čaruj zbraně
+        </h4>
+        <div
+          style={
+            {
+              "backgroundImage": "url(\\"/src/assets/images/cards/conjureWeapons.png\\")",
+              "backgroundPosition": "center",
+              "backgroundPositionY": -40,
+              "backgroundRepeat": "no-repeat",
+              "minHeight": 40,
+              "overflow": "hidden",
+            }
+          }
+        />
+        <small>
+          Zbraně +8
+        </small>
+      </div>
+    </div>
+    <div
+      className="not-playable"
+      onContextMenu={[Function]}
+    >
+      <div
+        className="_cardXyz_84b332 _cardMagic_84b332"
+      >
+        <div>
+          <img
+            src="/src/assets/images/dashboard-icons/crystals.png"
+          />
+        </div>
+        <div>
+          25
+        </div>
+        <h4>
+          Kletba
+        </h4>
+        <div
+          style={
+            {
+              "backgroundImage": "url(\\"/src/assets/images/cards/curse.png\\")",
+              "backgroundPosition": "center",
+              "backgroundPositionY": -40,
+              "backgroundRepeat": "no-repeat",
+              "minHeight": 40,
+              "overflow": "hidden",
+            }
+          }
+        />
+        <small>
+          Vše +1, vše soupeře -1
+        </small>
+      </div>
+    </div>
+    <div
+      className="not-playable"
+      onContextMenu={[Function]}
+    >
+      <div
+        className="_cardXyz_84b332 _cardMagic_84b332"
+      >
+        <div>
+          <img
+            src="/src/assets/images/dashboard-icons/crystals.png"
+          />
+        </div>
+        <div>
+          8
+        </div>
+        <h4>
+          Znič zbraně
+        </h4>
+        <div
+          style={
+            {
+              "backgroundImage": "url(\\"/src/assets/images/cards/destroyWeapons.png\\")",
+              "backgroundPosition": "center",
+              "backgroundPositionY": -40,
+              "backgroundRepeat": "no-repeat",
+              "minHeight": 40,
+              "overflow": "hidden",
+            }
+          }
+        />
+        <small>
+          Zbraně soupeře -8
+        </small>
+      </div>
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      <div
+        className="_cardXyz_84b332 _cardBuilding_84b332"
+      >
+        <div>
+          <img
+            src="/src/assets/images/dashboard-icons/bricks.png"
+          />
+        </div>
+        <div>
+          1
+        </div>
+        <h4>
+          Základy
+        </h4>
+        <div
+          style={
+            {
+              "backgroundImage": "url(\\"/src/assets/images/cards/foundations.png\\")",
+              "backgroundPosition": "center",
+              "backgroundPositionY": -40,
+              "backgroundRepeat": "no-repeat",
+              "minHeight": 40,
+              "overflow": "hidden",
+            }
+          }
+        />
+        <small>
+          Hrad +2
+        </small>
+      </div>
+    </div>
+    <div
+      className="not-playable"
+      onContextMenu={[Function]}
+    >
+      <div
+        className="_cardXyz_84b332 _cardBuilding_84b332"
+      >
+        <div>
+          <img
+            src="/src/assets/images/dashboard-icons/bricks.png"
+          />
+        </div>
+        <div>
+          10
+        </div>
+        <h4>
+          Povoz
+        </h4>
+        <div
+          style={
+            {
+              "backgroundImage": "url(\\"/src/assets/images/cards/wain.png\\")",
+              "backgroundPosition": "center",
+              "backgroundPositionY": -40,
+              "backgroundRepeat": "no-repeat",
+              "minHeight": 40,
+              "overflow": "hidden",
+            }
+          }
+        />
+        <small>
+          Hrad +8, hrad soupeře -4
+        </small>
+      </div>
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      <div
+        className="_cardXyz_84b332 _cardBuilding_84b332"
+      >
+        <div>
+          <img
+            src="/src/assets/images/dashboard-icons/bricks.png"
+          />
+        </div>
+        <div>
+          1
+        </div>
+        <h4>
+          Zeď
+        </h4>
+        <div
+          style={
+            {
+              "backgroundImage": "url(\\"/src/assets/images/cards/wall.png\\")",
+              "backgroundPosition": "center",
+              "backgroundPositionY": -40,
+              "backgroundRepeat": "no-repeat",
+              "minHeight": 40,
+              "overflow": "hidden",
+            }
+          }
+        />
+        <small>
+          Zeď +3
+        </small>
+      </div>
+    </div>
+    <div
+      className="not-playable"
+      onContextMenu={[Function]}
+    >
+      <div
+        className="_cardXyz_84b332 _cardArmy_84b332"
+      >
+        <div>
+          <img
+            src="/src/assets/images/dashboard-icons/weapons.png"
+          />
+        </div>
+        <div>
+          15
+        </div>
+        <h4>
+          Zloděj
+        </h4>
+        <div
+          style={
+            {
+              "backgroundImage": "url(\\"/src/assets/images/cards/thief.png\\")",
+              "backgroundPosition": "center",
+              "backgroundPositionY": -40,
+              "backgroundRepeat": "no-repeat",
+              "minHeight": 40,
+              "overflow": "hidden",
+            }
+          }
+        />
+        <small>
+          Převod zásob soupeře 5
+        </small>
+      </div>
+    </div>
   </div>,
 ]
 `;

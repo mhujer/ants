@@ -1,30 +1,9 @@
 import { CardDefinition, cardDefinitions } from './CardDefinitions';
 
-export class Card {
-    private readonly id: string;
-    private readonly type: CardDefinition;
-    private discarded: boolean = false;
-
-    constructor(type: CardDefinition) {
-        this.id = crypto.randomUUID();
-        this.type = type;
-    }
-
-    getId(): string {
-        return this.id;
-    }
-
-    getType(): CardDefinition {
-        return this.type;
-    }
-
-    wasDiscarded(): boolean {
-        return this.discarded;
-    }
-
-    markAsDiscarded(): void {
-        this.discarded = true;
-    }
+export interface Card {
+    readonly id: string;
+    readonly type: CardDefinition;
+    discarded: boolean;
 }
 
 /**
@@ -48,5 +27,10 @@ export function generateCard(): Card {
     if (randomCardDefinition === undefined) {
         throw new Error(`Card definition "${randomCardDefinitionIndex}" not found!`);
     }
-    return new Card(randomCardDefinition);
+
+    return {
+        id: crypto.randomUUID(),
+        type: randomCardDefinition,
+        discarded: false,
+    };
 }

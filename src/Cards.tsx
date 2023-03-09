@@ -13,7 +13,7 @@ export const Cards: React.FC<Props> = ({ playerResources, cardsInHand, playCardH
     const cards = cardsInHand.map((card) => {
         return (
             <CardComponentPlayable
-                key={card.getId()}
+                key={card.id}
                 card={card}
                 playerResources={playerResources}
                 playCardHandler={() => playCardHandler(card)}

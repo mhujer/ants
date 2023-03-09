@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const CardComponent: React.FC<Props> = ({ card }) => {
-    const cardDefinition = card.getType();
+    const cardDefinition = card.type;
 
     let cardRequirementsAmount;
     let cardRequirementsType;
@@ -34,7 +34,7 @@ export const CardComponent: React.FC<Props> = ({ card }) => {
     return (
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         <div className={`${styles.cardXyz} ${cardTypeClassName}`}>
-            {card.wasDiscarded() && <h4>ODHOZENO</h4>}
+            {card.discarded && <h4>ODHOZENO</h4>}
             <ResourceIcon resourceType={cardRequirementsType} />
             <div>{cardRequirementsAmount}</div>
             <h4>{cardDefinition.name}</h4>
