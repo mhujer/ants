@@ -14,6 +14,27 @@ const App: React.FC = () => {
     const gameState = useAppSelector(selectGame);
     const dispatch = useAppDispatch();
 
+    /*
+    const playerOnTurn = useAppSelector((state) => state.game.playerOnTurn);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            // @todo canCardBePlayed asi přehodit do state
+            const aiAction = dummyAi(gameState);
+            console.dir('AI...');
+            console.dir(aiAction);
+            if (aiAction.type === 'play') {
+                dispatch(playCard(aiAction.card));
+            } else if (aiAction.type === 'discard') {
+                dispatch(discardCard(aiAction.card));
+            }
+        }, 200);
+
+        return () => {
+            clearTimeout(timeoutId);
+        }
+    }, [playerOnTurn, gameState]);*/
+
     // play sound
     useEffect(() => {
         setTimeout(() => {

@@ -243,7 +243,7 @@ export const gameSlice = createSlice({
 
             // draw a new card
             state.lastPlayedCard = card;
-            const playedCardIndex = playerState.cards.indexOf(card);
+            const playedCardIndex = playerState.cards.findIndex((cardItem) => cardItem.id === card.id);
             playerState.cards[playedCardIndex] = generateCard();
 
             if (playerState.castle >= 100) {
@@ -273,12 +273,12 @@ export const gameSlice = createSlice({
 
             const playerState = state.playerOnTurn === Player.BLACK_ANTS ? state.playerBlack : state.playerRed;
 
-            card.discarded = true;
-
             // @todo this case is monstly duplicated
             // draw a new card
-            state.lastPlayedCard = card;
-            const playedCardIndex = playerState.cards.indexOf(card);
+            const playedCardIndex = playerState.cards.findIndex((cardItem) => cardItem.id === card.id);
+            const playedCard = playerState.cards[playedCardIndex]!;
+            playedCard.discarded = true;
+            state.lastPlayedCard = playedCard;
             playerState.cards[playedCardIndex] = generateCard();
 
             // next turn

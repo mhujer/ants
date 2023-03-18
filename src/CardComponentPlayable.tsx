@@ -51,7 +51,7 @@ export const CardComponentPlayable: React.FC<Props> = ({
     );
 };
 
-function canBeCardPlayed(playerResources: PlayerResources, card: Card): boolean {
+export function canBeCardPlayed(playerResources: PlayerResources, card: Card): boolean {
     const requiredResources = card.type.requiredResources;
     if (requiredResources.bricks !== undefined) {
         return playerResources.bricks >= requiredResources.bricks;
