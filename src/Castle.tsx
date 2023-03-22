@@ -10,12 +10,16 @@ export const Castle: React.FC<Props> = ({ castle, wall }) => {
         border: '1px solid gray',
         background: 'silver',
         width: '8em',
+        transitionProperty: 'height',
+        transitionDuration: '1s',
     };
     const castleHeight = castle * 5;
     const wallCss = {
         border: '1px solid black',
         background: 'brown',
         width: '1em',
+        transitionProperty: 'height',
+        transitionDuration: '1s',
     };
     const wallHeight = wall * 5;
 

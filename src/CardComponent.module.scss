@@ -10,6 +10,12 @@
     padding: 10px;
     margin: 5px;
     text-align: center;
+
+    position: relative;
+    top: 0px;
+    left: 0px;
+    transition-property: left, top;
+    transition-duration: 0.7s;
 }
 
 .card-building {

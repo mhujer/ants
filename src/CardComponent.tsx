@@ -6,9 +6,10 @@ import styles from './CardComponent.module.scss';
 
 interface Props {
     card: Card;
+    coords: { x: number; y: number };
 }
 
-export const CardComponent: React.FC<Props> = ({ card }) => {
+export const CardComponent: React.FC<Props> = ({ card, coords }) => {
     const cardDefinition = card.type;
 
     let cardRequirementsAmount;
@@ -33,7 +34,13 @@ export const CardComponent: React.FC<Props> = ({ card }) => {
 
     return (
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        <div className={`${styles.cardXyz} ${cardTypeClassName}`}>
+        <div
+            className={`${styles.cardXyz} ${cardTypeClassName}`}
+            style={{
+                top: coords.y,
+                left: coords.x,
+            }}
+        >
             {card.discarded && <h4>ODHOZENO</h4>}
             <ResourceIcon resourceType={cardRequirementsType} />
             <div>{cardRequirementsAmount}</div>

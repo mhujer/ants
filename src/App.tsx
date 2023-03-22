@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { PlayerDashboard } from './PlayerDashboard';
 import { Castle } from './Castle';
 import './App.css';
@@ -9,10 +9,13 @@ import { Cards } from './Cards';
 import { playSound, Sound } from './Sounds';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { discardCard, playCard, playSound as playSoundAction, selectGame } from './store/game/gameSlice';
+import { cumulativeOffset } from './utils';
 
 const App: React.FC = () => {
     const gameState = useAppSelector(selectGame);
     const dispatch = useAppDispatch();
+
+    const discardDeckWrapperRef = useRef<HTMLDivElement>(null);
 
     /*
     const playerOnTurn = useAppSelector((state) => state.game.playerOnTurn);
@@ -79,6 +82,16 @@ const App: React.FC = () => {
     //const allCards = cardDefinitions.map((cardDefinition) => new Card(cardDefinition));
     //const allCardsComponents = allCards.map((card) => <CardComponent card={card} key={card.id} />);
 
+    let discardDeckWrapperX = 0;
+    let discardDeckWrapperY = 0;
+    if (discardDeckWrapperRef.current !== null) {
+        //discardDeckWrapperX = discardDeckWrapperRef.current.offsetLeft;
+        //discardDeckWrapperY = discardDeckWrapperRef.current.offsetTop;
+        const offset = cumulativeOffset(discardDeckWrapperRef.current);
+        discardDeckWrapperX = offset.left;
+        discardDeckWrapperY = offset.top;
+    }
+
     return (
         <>
             {playerWonContent}
@@ -95,9 +108,16 @@ const App: React.FC = () => {
                     wall={gameState.playerBlack.wall}
                 />
                 <Castle castle={gameState.playerBlack.castle} wall={gameState.playerBlack.wall} />
-                {gameState.lastPlayedCard !== undefined ? (
-                    <CardComponent key={gameState.lastPlayedCard.id} card={gameState.lastPlayedCard} />
-                ) : null}
+                <div ref={discardDeckWrapperRef}>
+                    {gameState.lastPlayedCard !== undefined ? (
+                        <CardComponent
+                            key={gameState.lastPlayedCard.id}
+                            card={gameState.lastPlayedCard}
+                            coords={{ x: 0, y: 0 }}
+                        />
+                    ) : null}
+                    {/*<CardComponent key={gameState.playerBlack.cards[0]!.id} card={gameState.playerBlack.cards[0]} />*/}
+                </div>
                 <Castle castle={gameState.playerRed.castle} wall={gameState.playerRed.wall} />
                 <PlayerDashboard
                     isOnTurn={gameState.playerOnTurn === Player.RED_ANTS}
@@ -112,6 +132,7 @@ const App: React.FC = () => {
                 />
             </div>
             <Cards
+                discardDeckCoordinates={{ x: discardDeckWrapperX, y: discardDeckWrapperY }}
                 playerResources={{
                     bricks: playerOnTurnData.bricks,
                     weapons: playerOnTurnData.weapons,
