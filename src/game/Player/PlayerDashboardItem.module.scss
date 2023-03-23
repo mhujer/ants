@@ -1,0 +1,66 @@
+@import '../../_vars.scss';
+
+.player-stats {
+    display: flex;
+    flex-direction: column;
+    width: 7em;
+    color: white;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.row:first-of-type {
+    border-bottom: 1px dotted gray;
+}
+
+.icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    text-align: center;
+    padding: 5px;
+}
+
+.icon {
+}
+
+.icon-label,
+.icon-label-creators {
+    font-size: 80%;
+}
+
+.icon-label-creators {
+    color: yellow;
+}
+
+.value-wrapper {
+    display: flex;
+    flex: 1;
+    padding: 5px;
+    align-items: center;
+    justify-content: space-around;
+    font-weight: bold;
+}
+
+.value-creators {
+    color: yellow;
+}
+
+.resource-bricks {
+    background-color: $dashboardBuildersBackgroundColor;
+    border: 3px outset lighten($dashboardBuildersBackgroundColor, 12);
+}
+
+.resource-weapons {
+    background-color: $dashboardSoldiersBackgroundColor;
+    border: 3px outset lighten($dashboardSoldiersBackgroundColor, 12);
+}
+
+.resource-crystals {
+    background-color: $dashboardMagesBackgroundColor;
+    border: 3px outset lighten($dashboardMagesBackgroundColor, 12);
+}
