@@ -7,6 +7,7 @@ import crystalsIcon from '../../assets/images/dashboard-icons/crystals.png';
 import magesIcon from '../../assets/images/dashboard-icons/mages.png';
 import soldiersIcon from '../../assets/images/dashboard-icons/soldiers.png';
 import weaponsIcon from '../../assets/images/dashboard-icons/weapons.png';
+import { PlayerDashboardCastleStats } from './PlayerDashboardCastleStats';
 
 interface Props {
     builders: number;
@@ -58,7 +59,8 @@ export const PlayerDashboard: React.FC<Props> = ({
                 amountIcon={crystalsIcon}
                 amount={crystals}
             />
-            {/*<CastleStats castle={castle} wall={wall} />*/}
+            <br />
+            <PlayerDashboardCastleStats castle={30} wall={20} />
         </div>
     );
 };

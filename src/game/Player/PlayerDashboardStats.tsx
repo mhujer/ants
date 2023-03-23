@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './PlayerDashboardItem.module.scss';
+import styles from './PlayerDashboardStats.module.scss';
 import { Resource } from '../Resource/Resource';
 
 interface Props {
