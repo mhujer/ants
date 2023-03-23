@@ -1,0 +1,22 @@
+.castle {
+    border: 1px solid blue;
+    width: 160px; // grass image width
+    height: 255px; // castle image + grass image
+    position: relative; // to allow positioning the grass
+    margin: 0 10px; // to put some spacing around
+}
+
+.castle-image-wrapper {
+    padding: 0 16px; // grass image is 32px wider than the castle image
+    overflow: hidden; // hides overflowing castle in the bottom
+}
+
+.castle-image {
+    position: relative; // allows image to be shifted up/down by the inline CSS "bottom"
+}
+
+.grass-image {
+    position: absolute;
+    bottom: 0px; // so the castle starts in the middle of the grass
+    z-index: -1; // castle is in front of the grass
+}

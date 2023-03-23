@@ -1,0 +1,4 @@
+.castle-with-wall {
+    display: flex;
+    flex-direction: row;
+}
