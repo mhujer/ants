@@ -34,7 +34,7 @@ export const CardComponent: React.FC<{ cardId: CardId }> = ({ cardId }) => {
                 <ResourceIcon resourceType={cardRequirementsType} />
             </div>
             <div className={styles.resourceAmount}>{cardRequirementsAmount}</div>
-            <div>
+            <div className={styles.cardNameWrapper}>
                 <h1 className={styles.cardName}>{cardDefinition.name}</h1>
             </div>
             <div

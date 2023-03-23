@@ -1,8 +1,8 @@
 @import '../../_vars.scss';
 
 .card {
-    width: 7em;
-    height: 11em;
+    width: 8em;
+    height: 12em;
     border: 6px solid silver;
     border-radius: 15px;
     margin: 5px;
@@ -10,8 +10,8 @@
     position: relative; // to allow positioning inside
     overflow: hidden; // do not let the content overflow in any case
 
-    //display: flex;
-    //flex-direction: column;
+    display: flex;
+    flex-direction: column;
 
     /* play card animation
     position: relative;
@@ -40,35 +40,40 @@
 .resource-icon {
     position: absolute;
     left: 0;
-    top: 0;
+    top: 2px;
 }
 
 .resource-amount {
     position: absolute;
-    right: 5px;
-    top: 0;
+    right: 6px;
+    top: 1px;
     font-weight: bold;
+}
+
+.card-name-wrapper {
+    flex: 2;
+    margin-top: 25px;
 }
 
 .card-name {
     margin: 0;
-    margin-top: 30px;
-    font-size: 17px;
+    font-size: 18px;
     color: red;
 }
 
 .card-image {
     // @todo obrázky oříznout a napozicovat pořádně tady
     min-height: 40px;
-    margin: 0.8em 0px;
     background-repeat: no-repeat;
     background-position: center;
     overflow: hidden;
+    flex: 3;
 }
 
 .description {
-    position: absolute;
-    bottom: 10px;
+    flex: 2;
+    margin-top: 10px;
+    margin-bottom: 5px;
     width: 100%;
     text-align: center;
     font-size: 80%;

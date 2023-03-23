@@ -8,6 +8,7 @@ import bricksIcon from './assets/images/dashboard-icons/bricks.png';
 import { PlayerDashboard } from './game/Player/PlayerDashboard';
 import { CardDefinitions, cardDefinitions } from './game/Card/CardDefinitions';
 import { CardComponent } from './game/Card/CardComponent';
+import { CardBack } from './game/Card/CardBack';
 
 export const Demo: React.FC = () => {
     const cardsIds = Object.keys(cardDefinitions) as [keyof CardDefinitions];
@@ -21,6 +22,9 @@ export const Demo: React.FC = () => {
 
     return (
         <>
+            <CardBack />
+            <hr />
+
             {cards}
             <hr />
 
