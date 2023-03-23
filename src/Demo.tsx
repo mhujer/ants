@@ -6,10 +6,24 @@ import { PlayerDashboardStats } from './game/Player/PlayerDashboardStats';
 import buildersIcon from './assets/images/dashboard-icons/builders.png';
 import bricksIcon from './assets/images/dashboard-icons/bricks.png';
 import { PlayerDashboard } from './game/Player/PlayerDashboard';
+import { CardDefinitions, cardDefinitions } from './game/Card/CardDefinitions';
+import { CardComponent } from './game/Card/CardComponent';
 
 export const Demo: React.FC = () => {
+    const cardsIds = Object.keys(cardDefinitions) as [keyof CardDefinitions];
+    const cards = cardsIds.map((cardId) => {
+        return (
+            <div key={cardId} style={{ display: 'inline-block' }}>
+                <CardComponent key={cardId} cardId={cardId} />
+            </div>
+        );
+    });
+
     return (
         <>
+            {cards}
+            <hr />
+
             <PlayerDashboardStats
                 resourceType={'bricks'}
                 creatorsLabel="Stavitelé"
