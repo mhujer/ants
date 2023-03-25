@@ -5,7 +5,7 @@ import { CardComponent } from './CardComponent';
 
 export const CardDiscarded: React.FC<{ cardId: CardId }> = ({ cardId }) => {
     return (
-        <div>
+        <div className={styles.wrapper}>
             <div className={styles.label}>Odloženo</div>
             <div className={styles.cardDiscarded}>
                 <CardComponent cardId={cardId} />

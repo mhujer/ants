@@ -12,10 +12,10 @@
 
 .castle-image {
     position: relative; // allows image to be shifted up/down by the inline CSS "bottom"
+    z-index: 1; // castle is in front of the grass
 }
 
 .grass-image {
     position: absolute;
     bottom: 0px; // so the castle starts in the middle of the grass
-    z-index: -1; // castle is in front of the grass
 }

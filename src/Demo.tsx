@@ -10,6 +10,7 @@ import { CardDefinitions, cardDefinitions } from './game/Card/CardDefinitions';
 import { CardComponent } from './game/Card/CardComponent';
 import { CardBack } from './game/Card/CardBack';
 import { CardDiscarded } from './game/Card/CardDiscarded';
+import { Game } from './game/Game';
 
 export const Demo: React.FC = () => {
     const cardsIds = Object.keys(cardDefinitions) as [keyof CardDefinitions];
@@ -23,6 +24,10 @@ export const Demo: React.FC = () => {
 
     return (
         <>
+            <Game />
+
+            <hr />
+
             <CardDiscarded cardId={'babylon'} />
 
             <hr />
