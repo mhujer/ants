@@ -1,6 +1,5 @@
 import React from 'react';
 import { PlayerDashboardStats } from './PlayerDashboardStats';
-/*import { CastleStats } from './CastleStats';*/
 import bricksIcon from '../../assets/images/dashboard-icons/bricks.png';
 import buildersIcon from '../../assets/images/dashboard-icons/builders.png';
 import crystalsIcon from '../../assets/images/dashboard-icons/crystals.png';
@@ -8,30 +7,37 @@ import magesIcon from '../../assets/images/dashboard-icons/mages.png';
 import soldiersIcon from '../../assets/images/dashboard-icons/soldiers.png';
 import weaponsIcon from '../../assets/images/dashboard-icons/weapons.png';
 import { PlayerDashboardCastleStats } from './PlayerDashboardCastleStats';
+import { Player } from './Player';
+import { PlayerBadge } from './PlayerBadge';
 
 interface Props {
+    player: Player;
+    isOnTurn: boolean;
     builders: number;
     bricks: number;
     soldiers: number;
     weapons: number;
     mages: number;
     crystals: number;
-    // castle: number;
-    // wall: number;
+    castle: number;
+    wall: number;
 }
 
 export const PlayerDashboard: React.FC<Props> = ({
+    player,
+    isOnTurn,
     builders,
     bricks,
     soldiers,
     weapons,
     mages,
     crystals,
-    // castle,
-    // wall,
+    castle,
+    wall,
 }) => {
     return (
         <div className={'playerDashboard'}>
+            <PlayerBadge player={player} isOnTurn={isOnTurn} />
             <PlayerDashboardStats
                 resourceType={'bricks'}
                 creatorsLabel="Stavitelé"
@@ -60,7 +66,7 @@ export const PlayerDashboard: React.FC<Props> = ({
                 amount={crystals}
             />
             <br />
-            <PlayerDashboardCastleStats castle={30} wall={20} />
+            <PlayerDashboardCastleStats castle={castle} wall={wall} />
         </div>
     );
 };

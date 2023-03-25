@@ -11,6 +11,7 @@ import { CardComponent } from './game/Card/CardComponent';
 import { CardBack } from './game/Card/CardBack';
 import { CardDiscarded } from './game/Card/CardDiscarded';
 import { Game } from './game/Game';
+import { PlayerBadge } from './game/Player/PlayerBadge';
 
 export const Demo: React.FC = () => {
     const cardsIds = Object.keys(cardDefinitions) as [keyof CardDefinitions];
@@ -25,6 +26,11 @@ export const Demo: React.FC = () => {
     return (
         <>
             <Game />
+
+            <hr />
+
+            <PlayerBadge player={'black'} isOnTurn={true} />
+            <PlayerBadge player={'red'} isOnTurn={true} />
 
             <hr />
 
@@ -50,7 +56,18 @@ export const Demo: React.FC = () => {
 
             <hr />
 
-            <PlayerDashboard builders={2} bricks={10} soldiers={2} weapons={10} mages={2} crystals={10} />
+            <PlayerDashboard
+                player={'black'}
+                isOnTurn={false}
+                builders={2}
+                bricks={10}
+                soldiers={2}
+                weapons={10}
+                mages={2}
+                crystals={10}
+                castle={30}
+                wall={20}
+            />
 
             <hr />
 

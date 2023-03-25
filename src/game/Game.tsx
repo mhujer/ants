@@ -10,7 +10,18 @@ export const Game: React.FC = () => {
         <div className={styles.wholeGameWrapper}>
             <div className={styles.dashboardWrapper}>
                 <div>
-                    <PlayerDashboard builders={2} bricks={10} soldiers={2} weapons={10} mages={2} crystals={10} />
+                    <PlayerDashboard
+                        isOnTurn={true}
+                        player={'black'}
+                        builders={2}
+                        bricks={10}
+                        soldiers={2}
+                        weapons={10}
+                        mages={2}
+                        crystals={10}
+                        castle={30}
+                        wall={20}
+                    />
                 </div>
                 <div className={styles.deckCastlesWrapper}>
                     <div className={styles.decksWrapper}>
@@ -27,7 +38,18 @@ export const Game: React.FC = () => {
                     </div>
                 </div>
                 <div>
-                    <PlayerDashboard builders={2} bricks={10} soldiers={2} weapons={10} mages={2} crystals={10} />
+                    <PlayerDashboard
+                        isOnTurn={false}
+                        player={'red'}
+                        builders={2}
+                        bricks={10}
+                        soldiers={2}
+                        weapons={10}
+                        mages={2}
+                        crystals={10}
+                        castle={30}
+                        wall={20}
+                    />
                 </div>
             </div>
             <div className={styles.cardsWrapper}>
