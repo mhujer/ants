@@ -1,4 +1,5 @@
 .castle-with-wall {
     display: flex;
     flex-direction: row;
+    zoom: 1.2;
 }

@@ -11,4 +11,6 @@
 
 .wall-image {
     position: relative; // allows image to be shifted up/down by the inline CSS "bottom"
+    transition-property: bottom; // animate wall changes
+    transition-duration: 0.7s;
 }

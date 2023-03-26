@@ -13,6 +13,8 @@
 .castle-image {
     position: relative; // allows image to be shifted up/down by the inline CSS "bottom"
     z-index: 1; // castle is in front of the grass
+    transition-property: bottom; // animate castle changes
+    transition-duration: 0.7s;
 }
 
 .grass-image {

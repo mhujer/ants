@@ -44,7 +44,7 @@ export const Game: React.FC = () => {
                 <div className={styles.deckCastlesWrapper}>
                     <div className={styles.decksWrapper}>
                         <CardBack />
-                        <DiscardDeck ref={discardDeckRef} />
+                        <DiscardDeck ref={discardDeckRef} card={game.lastPlayedCard} />
                     </div>
                     <div className={styles.castlesWrapper}>
                         <div className={styles.castleBlack}>
