@@ -1,11 +1,12 @@
-import React, { RefObject, TransitionEventHandler, useRef, useState } from 'react';
+import React, { MouseEvent, RefObject, TransitionEventHandler, useRef, useState } from 'react';
 import { CardComponent } from './Card/CardComponent';
 import { Card } from './Card/Card';
 import { cumulativeOffset } from '../utils';
 import styles from './CardInHand.module.scss';
 import { useAppDispatch } from '../store/hooks';
-import { cardAnimationStarted, cardPlayed } from '../store/gameSlice';
+import { cardAnimationStarted, cardDiscarded, cardPlayed } from '../store/gameSlice';
 import { cardDefinitions } from './Card/CardDefinitions';
+import { CardDiscarded } from './Card/CardDiscarded';
 
 export interface PlayerResources {
     bricks: number;
@@ -20,6 +21,7 @@ export const CardInHand: React.FC<{
 }> = ({ card, playerResources, discardDeckRef }) => {
     const cardWrapperDivRef = useRef<HTMLDivElement>(null);
     const [cardXY, setCardXY] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+    const [cardAction, setCardAction] = useState<'play' | 'discard' | null>(null);
 
     const dispatch = useAppDispatch();
 
@@ -56,8 +58,31 @@ export const CardInHand: React.FC<{
             return;
         }
 
-        dispatch(cardPlayed(card));
+        if (cardAction === null) {
+            throw new Error('!');
+        }
+
+        if (cardAction === 'play') {
+            dispatch(cardPlayed(card));
+        } else {
+            dispatch(cardDiscarded(card));
+        }
     };
+
+    function clickHandler(e: MouseEvent) {
+        e.preventDefault();
+        if (e.type === 'click') {
+            setCardAction('play');
+            handleCardClick();
+            return;
+        }
+        if (e.type === 'contextmenu') {
+            setCardAction('discard');
+            handleCardClick();
+            return;
+        }
+        console.dir(e);
+    }
 
     const canCardBePlayed = canBeCardPlayed(playerResources, card);
 
@@ -67,14 +92,16 @@ export const CardInHand: React.FC<{
                 key={card.id}
                 className={styles.card}
                 ref={cardWrapperDivRef}
-                onClick={handleCardClick}
+                onClick={clickHandler}
+                onContextMenu={clickHandler}
                 onTransitionEnd={playCardHandler}
                 style={{
                     left: cardXY.x,
                     top: cardXY.y,
                 }}
             >
-                <CardComponent key={card.id} cardId={card.type} />
+                {cardAction !== 'discard' && <CardComponent key={card.id} cardId={card.type} />}
+                {cardAction === 'discard' && <CardDiscarded key={card.id} cardId={card.type} />}
             </div>
         );
     }
@@ -84,14 +111,15 @@ export const CardInHand: React.FC<{
             key={card.id}
             className={`${styles.card} ${styles.cardNotPlayable}`} // eslint-disable-line @typescript-eslint/restrict-template-expressions
             ref={cardWrapperDivRef}
-            onClick={handleCardClick}
+            onContextMenu={clickHandler}
             onTransitionEnd={playCardHandler}
             style={{
                 left: cardXY.x,
                 top: cardXY.y,
             }}
         >
-            <CardComponent key={card.id} cardId={card.type} />
+            {cardAction !== 'discard' && <CardComponent key={card.id} cardId={card.type} />}
+            {cardAction === 'discard' && <CardDiscarded key={card.id} cardId={card.type} />}
         </div>
     );
 };

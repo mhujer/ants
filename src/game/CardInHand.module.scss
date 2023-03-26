@@ -4,6 +4,7 @@
     cursor: pointer;
 
     // for card animation
+    z-index: 2; // because of the discard deck
     position: relative;
     top: 0px;
     left: 0px;

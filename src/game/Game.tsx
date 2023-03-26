@@ -26,64 +26,67 @@ export const Game: React.FC = () => {
 
     return (
         <div className={styles.wholeGameWrapper}>
-            <div className={styles.dashboardWrapper}>
-                <div>
-                    <PlayerDashboard
-                        isOnTurn={game.playerOnTurn === 'black'}
-                        player={'black'}
-                        builders={game.playerBlack.builders}
-                        bricks={game.playerBlack.bricks}
-                        soldiers={game.playerBlack.soldiers}
-                        weapons={game.playerBlack.weapons}
-                        mages={game.playerBlack.mages}
-                        crystals={game.playerBlack.crystals}
-                        castle={game.playerBlack.castle}
-                        wall={game.playerBlack.wall}
+            <div className={styles.background}></div>
+            <div className={styles.gameWrapperInner}>
+                <div className={styles.dashboardWrapper}>
+                    <div>
+                        <PlayerDashboard
+                            isOnTurn={game.playerOnTurn === 'black'}
+                            player={'black'}
+                            builders={game.playerBlack.builders}
+                            bricks={game.playerBlack.bricks}
+                            soldiers={game.playerBlack.soldiers}
+                            weapons={game.playerBlack.weapons}
+                            mages={game.playerBlack.mages}
+                            crystals={game.playerBlack.crystals}
+                            castle={game.playerBlack.castle}
+                            wall={game.playerBlack.wall}
+                        />
+                    </div>
+                    <div className={styles.deckCastlesWrapper}>
+                        <div className={styles.decksWrapper}>
+                            <CardBack />
+                            <DiscardDeck ref={discardDeckRef} card={game.lastPlayedCard} />
+                        </div>
+                        <div className={styles.castlesWrapper}>
+                            <div className={styles.castleBlack}>
+                                <CastleWithWall
+                                    player={'black'}
+                                    castleHeight={game.playerBlack.castle}
+                                    wallHeight={game.playerBlack.wall}
+                                />
+                            </div>
+                            <div className={styles.castleRed}>
+                                <CastleWithWall
+                                    player={'red'}
+                                    castleHeight={game.playerRed.castle}
+                                    wallHeight={game.playerRed.wall}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <PlayerDashboard
+                            isOnTurn={game.playerOnTurn === 'red'}
+                            player={'red'}
+                            builders={game.playerRed.builders}
+                            bricks={game.playerRed.bricks}
+                            soldiers={game.playerRed.soldiers}
+                            weapons={game.playerRed.weapons}
+                            mages={game.playerRed.mages}
+                            crystals={game.playerRed.crystals}
+                            castle={game.playerRed.castle}
+                            wall={game.playerRed.wall}
+                        />
+                    </div>
+                </div>
+                <div className={styles.cardsWrapper}>
+                    <CardsInHand
+                        cards={playerOnTurn === 'black' ? game.playerBlack.cards : game.playerRed.cards}
+                        playerResources={playerOnTurn === 'black' ? game.playerBlack : game.playerRed}
+                        discardDeckRef={discardDeckRef}
                     />
                 </div>
-                <div className={styles.deckCastlesWrapper}>
-                    <div className={styles.decksWrapper}>
-                        <CardBack />
-                        <DiscardDeck ref={discardDeckRef} card={game.lastPlayedCard} />
-                    </div>
-                    <div className={styles.castlesWrapper}>
-                        <div className={styles.castleBlack}>
-                            <CastleWithWall
-                                player={'black'}
-                                castleHeight={game.playerBlack.castle}
-                                wallHeight={game.playerBlack.wall}
-                            />
-                        </div>
-                        <div className={styles.castleRed}>
-                            <CastleWithWall
-                                player={'red'}
-                                castleHeight={game.playerRed.castle}
-                                wallHeight={game.playerRed.wall}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <PlayerDashboard
-                        isOnTurn={game.playerOnTurn === 'red'}
-                        player={'red'}
-                        builders={game.playerRed.builders}
-                        bricks={game.playerRed.bricks}
-                        soldiers={game.playerRed.soldiers}
-                        weapons={game.playerRed.weapons}
-                        mages={game.playerRed.mages}
-                        crystals={game.playerRed.crystals}
-                        castle={game.playerRed.castle}
-                        wall={game.playerRed.wall}
-                    />
-                </div>
-            </div>
-            <div className={styles.cardsWrapper}>
-                <CardsInHand
-                    cards={playerOnTurn === 'black' ? game.playerBlack.cards : game.playerRed.cards}
-                    playerResources={playerOnTurn === 'black' ? game.playerBlack : game.playerRed}
-                    discardDeckRef={discardDeckRef}
-                />
             </div>
         </div>
     );

@@ -3,7 +3,7 @@ import { CardDefinitions, cardDefinitions, CardId } from './CardDefinitions';
 export interface Card {
     readonly id: string;
     readonly type: CardId;
-    // discarded: boolean;
+    discarded: boolean;
 }
 
 /**
@@ -33,6 +33,6 @@ export function generateCard(): Card {
     return {
         id: crypto.randomUUID(),
         type: randomCardDefinitionId,
-        //discarded: false,
+        discarded: false,
     };
 }

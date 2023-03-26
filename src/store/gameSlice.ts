@@ -275,13 +275,44 @@ export const gameSlice = createSlice({
                 state.playerOnTurn = state.playerOnTurn === 'black' ? 'red' : 'black';
             },
         },
+        cardDiscarded: {
+            prepare: (card: Card) => {
+                return {
+                    payload: {
+                        cardDiscarded: card,
+                        newCard: generateCard(),
+                    },
+                };
+            },
+            reducer: (state, action: PayloadAction<{ cardDiscarded: Card; newCard: Card }>) => {
+                const card = action.payload.cardDiscarded;
+
+                const playerState = state.playerOnTurn === 'black' ? state.playerBlack : state.playerRed;
+
+                // @todo this case is mostly duplicated
+                // draw a new card
+                const playedCardIndex = playerState.cards.findIndex((cardItem) => cardItem.id === card.id);
+                const playedCard = playerState.cards[playedCardIndex]!;
+                playedCard.discarded = true;
+                state.lastPlayedCard = playedCard;
+                playerState.cards[playedCardIndex] = action.payload.newCard;
+
+                // next turn
+                const nextPlayerState = state.playerOnTurn === 'black' ? state.playerRed : state.playerBlack;
+                nextPlayerState.bricks += nextPlayerState.builders;
+                nextPlayerState.weapons += nextPlayerState.soldiers;
+                nextPlayerState.crystals += nextPlayerState.mages;
+
+                state.playerOnTurn = state.playerOnTurn === 'black' ? 'red' : 'black';
+            },
+        },
         soundPlayed: (state) => {
             state.playSound = null;
         },
     },
 });
 
-export const { cardAnimationStarted, cardPlayed, soundPlayed } = gameSlice.actions;
+export const { cardAnimationStarted, cardPlayed, cardDiscarded, soundPlayed } = gameSlice.actions;
 
 export const selectGame = (state: RootState): GameState => state.game;
 
