@@ -11,6 +11,7 @@ import { CardComponent } from './game/Card/CardComponent';
 import { CardBack } from './game/Card/CardBack';
 import { CardDiscarded } from './game/Card/CardDiscarded';
 import { PlayerBadge } from './game/Player/PlayerBadge';
+import { Flag } from './game/Castle/Flag';
 
 export const Demo: React.FC = () => {
     const cardsIds = Object.keys(cardDefinitions) as [keyof CardDefinitions];
@@ -24,6 +25,8 @@ export const Demo: React.FC = () => {
 
     return (
         <>
+            <Flag color={'black'} />
+            <Flag color={'red'} />
             <PlayerBadge player={'black'} isOnTurn={true} />
             <PlayerBadge player={'red'} isOnTurn={true} />
 

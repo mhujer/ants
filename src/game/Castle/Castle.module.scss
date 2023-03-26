@@ -8,6 +8,14 @@
 .castle-image-wrapper {
     padding: 0 16px; // grass image is 32px wider than the castle image
     overflow: hidden; // hides overflowing castle in the bottom
+    position: relative;
+}
+
+.flag-wrapper {
+    position: absolute;
+    left: 72px;
+    transition-property: bottom; // animate changes
+    transition-duration: 0.7s;
 }
 
 .castle-image {

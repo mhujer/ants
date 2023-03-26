@@ -4,6 +4,7 @@ import castleRedImage from '../../assets/images/castle/castle-red.png';
 import grassImage from '../../assets/images/castle/grass.png';
 import { Player } from '../Player/Player';
 import styles from './Castle.module.scss';
+import { Flag } from './Flag';
 
 export const Castle: React.FC<{ player: Player; height: number }> = ({ player, height }) => {
     const heightPercent = height >= 100 ? 100 : height; // to prevent overflowing //@todo test
@@ -18,14 +19,24 @@ export const Castle: React.FC<{ player: Player; height: number }> = ({ player, h
             break;
     }
 
+    const castleImageBottom = -(100 - heightPercent) * 2 - 4;
+
     return (
         <div className={styles.castle}>
             <div className={styles.castleImageWrapper}>
+                <div
+                    className={styles.flagWrapper}
+                    style={{
+                        bottom: castleImageBottom + 200,
+                    }}
+                >
+                    <Flag color={player} />
+                </div>
                 <img
                     src={castleImage}
                     className={styles.castleImage}
                     style={{
-                        bottom: -(100 - heightPercent) * 2 - 4,
+                        bottom: castleImageBottom,
                     }}
                 />
             </div>
