@@ -1,7 +1,7 @@
 import React, { MouseEvent, useRef, useState } from 'react';
 import { Card } from './Card';
 import { CardComponent } from './CardComponent';
-import { cumulativeOffset } from './utils';
+import { cumulativeOffset } from '../src/utils';
 
 export interface PlayerResources {
     bricks: number;

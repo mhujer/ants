@@ -1,11 +1,12 @@
 import React from 'react';
 import './global.scss';
-import { Demo } from './Demo';
+import { Game } from './game/Game';
 
 export const App: React.FC = () => {
     return (
         <>
-            <Demo />
+            <Game />
+            {/*<hr /><hr /><Demo />*/}
         </>
     );
 };

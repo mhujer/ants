@@ -10,7 +10,6 @@ import { CardDefinitions, cardDefinitions } from './game/Card/CardDefinitions';
 import { CardComponent } from './game/Card/CardComponent';
 import { CardBack } from './game/Card/CardBack';
 import { CardDiscarded } from './game/Card/CardDiscarded';
-import { Game } from './game/Game';
 import { PlayerBadge } from './game/Player/PlayerBadge';
 
 export const Demo: React.FC = () => {
@@ -25,10 +24,6 @@ export const Demo: React.FC = () => {
 
     return (
         <>
-            <Game />
-
-            <hr />
-
             <PlayerBadge player={'black'} isOnTurn={true} />
             <PlayerBadge player={'red'} isOnTurn={true} />
 

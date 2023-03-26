@@ -5,21 +5,12 @@
     height: 12em;
     border: 6px solid silver;
     border-radius: 15px;
-    margin: 5px;
     text-align: center;
     position: relative; // to allow positioning inside
     overflow: hidden; // do not let the content overflow in any case
 
     display: flex;
     flex-direction: column;
-
-    /* play card animation
-    position: relative;
-    top: 0px;
-    left: 0px;
-    transition-property: left, top;
-    transition-duration: 0.7s;
-    */
 }
 
 .card-building {

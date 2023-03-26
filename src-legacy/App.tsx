@@ -9,7 +9,7 @@ import { Cards } from './Cards';
 import { playSound, Sound } from './Sounds';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { discardCard, playCard, playSound as playSoundAction, selectGame } from './store/game/gameSlice';
-import { cumulativeOffset } from './utils';
+import { cumulativeOffset } from '../src/utils';
 
 const App: React.FC = () => {
     const gameState = useAppSelector(selectGame);

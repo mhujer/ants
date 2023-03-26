@@ -1,0 +1,11 @@
+.card {
+    display: inline-block;
+    margin: 5px;
+
+    // for card animation
+    position: relative;
+    top: 0px;
+    left: 0px;
+    transition-property: left, top;
+    transition-duration: 0.7s;
+}

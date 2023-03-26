@@ -7,7 +7,6 @@ export const cumulativeOffset = function (inputElement: HTMLElement) {
     let top = 0,
         left = 0;
     do {
-        console.dir(element);
         top += element !== null ? element.offsetTop : 0;
         left += element !== null ? element.offsetLeft : 0;
         element = element.offsetParent as HTMLElement | null;

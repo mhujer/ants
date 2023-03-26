@@ -7,7 +7,7 @@ import cardPlayedSound from './assets/sounds/card-played.mp3';
 import curseSound from './assets/sounds/curse.mp3';
 import destroyCastleSound from './assets/sounds/destroy-castle.mp3';
 import destroyStockSound from './assets/sounds/destroy-stock.mp3';
-import destoryWallSound from './assets/sounds/destroy-wall.mp3';
+import destroyWallSound from './assets/sounds/destroy-wall.mp3';
 import fanfareSound from './assets/sounds/fanfare.mp3';
 import increaseStockSound from './assets/sounds/increase-stock.mp3';
 
@@ -57,7 +57,7 @@ export const playSound = (sound: Sound) => {
             soundUrl = destroyStockSound;
             break;
         case Sound.DESTROY_WALL:
-            soundUrl = destoryWallSound;
+            soundUrl = destroyWallSound;
             break;
         case Sound.FANFARE:
             soundUrl = fanfareSound;
