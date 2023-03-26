@@ -1,6 +1,7 @@
 .card {
     display: inline-block;
     margin: 5px;
+    cursor: pointer;
 
     // for card animation
     position: relative;
@@ -8,4 +9,9 @@
     left: 0px;
     transition-property: left, top;
     transition-duration: 0.7s;
+}
+
+.card-not-playable {
+    cursor: not-allowed;
+    filter: brightness(50%);
 }

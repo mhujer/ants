@@ -81,6 +81,7 @@ export const Game: React.FC = () => {
             <div className={styles.cardsWrapper}>
                 <CardsInHand
                     cards={playerOnTurn === 'black' ? game.playerBlack.cards : game.playerRed.cards}
+                    playerResources={playerOnTurn === 'black' ? game.playerBlack : game.playerRed}
                     discardDeckRef={discardDeckRef}
                 />
             </div>

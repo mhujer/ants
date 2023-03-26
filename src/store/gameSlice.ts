@@ -5,7 +5,7 @@ import { Card, generateCard } from '../game/Card/Card';
 import { Sound } from '../sounds/Sounds';
 import { cardDefinitions } from '../game/Card/CardDefinitions';
 
-interface PlayerGameState {
+export interface PlayerGameState {
     readonly builders: number;
     readonly bricks: number;
     readonly soldiers: number;
