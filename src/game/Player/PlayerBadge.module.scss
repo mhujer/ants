@@ -8,11 +8,11 @@
     font-weight: bold;
     font-size: 130%;
     text-align: center;
-    border: 5px inset;
+    border: 10px solid transparent;
 }
 
 .badge-active {
-    border: 5px solid $cardArmyBorderColor;
+    border: 10px solid $cardArmyBorderColor;
     animation-name: borderColorChange;
     animation-duration: 3s;
     animation-iteration-count: infinite;
@@ -24,13 +24,13 @@
         border-color: $cardArmyBorderColor;
     }
     25% {
-        border-color: lighten($cardArmyBorderColor, 20);
+        border-color: lighten($cardArmyBorderColor, 30);
     }
     50% {
-        border-color: lighten($cardArmyBorderColor, 50);
+        border-color: lighten($cardArmyBorderColor, 80);
     }
     75% {
-        border-color: lighten($cardArmyBorderColor, 20);
+        border-color: lighten($cardArmyBorderColor, 30);
     }
     100% {
         border-color: $cardArmyBorderColor;
