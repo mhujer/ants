@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './Game.module.scss';
 import { PlayerDashboard } from './Player/PlayerDashboard';
 import { CastleWithWall } from './Castle/CastleWithWall';
@@ -14,6 +14,8 @@ export const Game: React.FC = () => {
     const dispatch = useAppDispatch();
     const game = useAppSelector(selectGame);
 
+    const [birdsPlaying, setBirdsPlaying] = useState<boolean>(false);
+
     const playerOnTurn = game.playerOnTurn;
 
     // play sound
@@ -23,6 +25,15 @@ export const Game: React.FC = () => {
             dispatch(soundPlayed());
         }
     }, [game.playSound]);
+
+    // play bird sound
+    useEffect(() => {
+        if (birdsPlaying || game.playerOnTurn !== 'red') {
+            return;
+        }
+        // playSound('birds', true);
+        setBirdsPlaying(true);
+    }, [game.playerOnTurn, birdsPlaying]);
 
     return (
         <div className={styles.wholeGameWrapper}>

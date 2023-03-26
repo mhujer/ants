@@ -25,7 +25,7 @@ export type Sound =
     | 'fanfare'
     | 'increaseStock';
 
-export const playSound = (sound: Sound) => {
+export const playSound = (sound: Sound, loop: boolean = false) => {
     let soundUrl;
     switch (sound) {
         case 'applause':
@@ -71,6 +71,9 @@ export const playSound = (sound: Sound) => {
 
     void (async () => {
         const myAudio = new Audio(soundUrl);
+        if (loop) {
+            myAudio.loop = true;
+        }
         await myAudio.play();
     })();
 };
