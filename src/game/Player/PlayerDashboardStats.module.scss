@@ -44,6 +44,7 @@
     align-items: center;
     justify-content: space-around;
     font-weight: bold;
+    position: relative; // to allow positioning the amount changes
 }
 
 .value-creators {
@@ -64,7 +65,45 @@
     background-color: $dashboardMagesBackgroundColor;
     border: 3px outset lighten($dashboardMagesBackgroundColor, 12);
 }
+
 .resource-castle {
     background-color: $dashboardCastleBackgroundColor;
     border: 3px outset lighten($dashboardCastleBackgroundColor, 12);
+}
+
+.amount-change {
+    background: url('../../assets/images/resource-changed.png') no-repeat;
+    background-size: cover;
+    width: 32px;
+    height: 25px;
+    position: absolute;
+    left: 35px;
+    top: 18px;
+
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+
+    animation-name: blink;
+    animation-duration: 0.3s;
+    animation-iteration-count: 3;
+    animation-timing-function: linear;
+}
+
+@keyframes blink {
+    0% {
+        filter: opacity(10%);
+    }
+    25% {
+        filter: opacity(50%);
+    }
+    50% {
+        filter: opacity(100%);
+    }
+    75% {
+        filter: opacity(50%);
+    }
+    100% {
+        filter: opacity(10%);
+    }
 }

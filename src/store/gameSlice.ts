@@ -17,6 +17,16 @@ export interface PlayerGameState {
     readonly cards: Card[];
 }
 
+export type ResourceChangeForPlayer = Pick<
+    PlayerGameState,
+    'builders' | 'bricks' | 'soldiers' | 'weapons' | 'mages' | 'crystals' | 'castle' | 'wall'
+>;
+
+interface ResourceChange {
+    playerBlack: ResourceChangeForPlayer;
+    playerRed: ResourceChangeForPlayer;
+}
+
 export interface GameState {
     readonly playerOnTurn: Player;
     readonly playerWon?: Player;
@@ -24,6 +34,7 @@ export interface GameState {
     readonly playerBlack: PlayerGameState;
     readonly playerRed: PlayerGameState;
     readonly playSound: Sound | null;
+    readonly resourceChange: ResourceChange | null;
 }
 
 function getInitialState(): GameState {
@@ -70,6 +81,7 @@ function getInitialState(): GameState {
             ],
         },
         playSound: null,
+        resourceChange: null,
     };
 }
 
@@ -306,13 +318,49 @@ export const gameSlice = createSlice({
                 state.playerOnTurn = state.playerOnTurn === 'black' ? 'red' : 'black';
             },
         },
+        playResourcesChangeAnimation: (state, action: PayloadAction<GameState>) => {
+            const oldState = action.payload;
+
+            state.resourceChange = {
+                playerBlack: {
+                    builders: state.playerBlack.builders - oldState.playerBlack.builders,
+                    bricks: state.playerBlack.bricks - oldState.playerBlack.bricks,
+                    soldiers: state.playerBlack.soldiers - oldState.playerBlack.soldiers,
+                    weapons: state.playerBlack.weapons - oldState.playerBlack.weapons,
+                    mages: state.playerBlack.mages - oldState.playerBlack.mages,
+                    crystals: state.playerBlack.crystals - oldState.playerBlack.crystals,
+                    castle: state.playerBlack.castle - oldState.playerBlack.castle,
+                    wall: state.playerBlack.wall - oldState.playerBlack.wall,
+                },
+                playerRed: {
+                    builders: state.playerRed.builders - oldState.playerRed.builders,
+                    bricks: state.playerRed.bricks - oldState.playerRed.bricks,
+                    soldiers: state.playerRed.soldiers - oldState.playerRed.soldiers,
+                    weapons: state.playerRed.weapons - oldState.playerRed.weapons,
+                    mages: state.playerRed.mages - oldState.playerRed.mages,
+                    crystals: state.playerRed.crystals - oldState.playerRed.crystals,
+                    castle: state.playerRed.castle - oldState.playerRed.castle,
+                    wall: state.playerRed.wall - oldState.playerRed.wall,
+                },
+            };
+        },
+        hideResourcesChangeAnimation: (state) => {
+            state.resourceChange = null;
+        },
         soundPlayed: (state) => {
             state.playSound = null;
         },
     },
 });
 
-export const { cardAnimationStarted, cardPlayed, cardDiscarded, soundPlayed } = gameSlice.actions;
+export const {
+    cardAnimationStarted,
+    cardPlayed,
+    cardDiscarded,
+    playResourcesChangeAnimation,
+    hideResourcesChangeAnimation,
+    soundPlayed,
+} = gameSlice.actions;
 
 export const selectGame = (state: RootState): GameState => state.game;
 

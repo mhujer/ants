@@ -7,9 +7,11 @@ interface Props {
     creatorsLabel: string;
     creatorsIcon: string;
     creators: number;
+    creatorsChange: number;
     amountLabel: string;
     amountIcon: string;
     amount: number;
+    amountChange: number;
 }
 
 export const PlayerDashboardStats: React.FC<Props> = ({
@@ -17,9 +19,11 @@ export const PlayerDashboardStats: React.FC<Props> = ({
     creatorsLabel,
     creatorsIcon,
     creators,
+    creatorsChange,
     amountLabel,
     amountIcon,
     amount,
+    amountChange,
 }) => {
     let resourceClassname = null;
     switch (resourceType) {
@@ -46,6 +50,7 @@ export const PlayerDashboardStats: React.FC<Props> = ({
                 </div>
                 <div className={styles.valueWrapper}>
                     <div className={styles.valueCreators}>{creators}</div>
+                    {creatorsChange !== 0 && <div className={styles.amountChange}>{creatorsChange}</div>}
                 </div>
             </div>
             <div className={styles.row}>
@@ -55,7 +60,10 @@ export const PlayerDashboardStats: React.FC<Props> = ({
                     </div>
                     <div className={styles.iconLabel}>{amountLabel}</div>
                 </div>
-                <div className={styles.valueWrapper}>{amount}</div>
+                <div className={styles.valueWrapper}>
+                    {amount}
+                    {amountChange !== 0 && <div className={styles.amountChange}>{amountChange}</div>}
+                </div>
             </div>
         </div>
     );

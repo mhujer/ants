@@ -25,6 +25,34 @@ export const Demo: React.FC = () => {
 
     return (
         <>
+            <PlayerDashboardStats
+                resourceType={'bricks'}
+                creatorsLabel="Stavitelé"
+                creatorsIcon={buildersIcon}
+                creators={2}
+                creatorsChange={1}
+                amountLabel="Cihly"
+                amountIcon={bricksIcon}
+                amount={8}
+                amountChange={-5}
+            />
+
+            <PlayerDashboard
+                player={'black'}
+                isOnTurn={false}
+                builders={2}
+                bricks={10}
+                soldiers={2}
+                weapons={10}
+                mages={2}
+                crystals={10}
+                castle={30}
+                wall={20}
+                resourceChange={null}
+            />
+
+            <hr />
+
             <Flag color={'black'} />
             <Flag color={'red'} />
             <PlayerBadge player={'black'} isOnTurn={true} />
@@ -47,9 +75,11 @@ export const Demo: React.FC = () => {
                 creatorsLabel="Stavitelé"
                 creatorsIcon={buildersIcon}
                 creators={2}
+                creatorsChange={1}
                 amountLabel="Cihly"
                 amountIcon={bricksIcon}
                 amount={8}
+                amountChange={-8}
             />
 
             <hr />
@@ -65,6 +95,7 @@ export const Demo: React.FC = () => {
                 crystals={10}
                 castle={30}
                 wall={20}
+                resourceChange={null}
             />
 
             <hr />

@@ -52,6 +52,7 @@ export const Game: React.FC = () => {
                             crystals={game.playerBlack.crystals}
                             castle={game.playerBlack.castle}
                             wall={game.playerBlack.wall}
+                            resourceChange={game.resourceChange !== null ? game.resourceChange.playerBlack : null}
                         />
                     </div>
                     <div className={styles.deckCastlesWrapper}>
@@ -88,6 +89,7 @@ export const Game: React.FC = () => {
                             crystals={game.playerRed.crystals}
                             castle={game.playerRed.castle}
                             wall={game.playerRed.wall}
+                            resourceChange={game.resourceChange !== null ? game.resourceChange.playerRed : null}
                         />
                     </div>
                 </div>

@@ -9,6 +9,7 @@ import weaponsIcon from '../../assets/images/dashboard-icons/weapons.png';
 import { PlayerDashboardCastleStats } from './PlayerDashboardCastleStats';
 import { Player } from './Player';
 import { PlayerBadge } from './PlayerBadge';
+import { ResourceChangeForPlayer } from '../../store/gameSlice';
 
 interface Props {
     player: Player;
@@ -21,6 +22,7 @@ interface Props {
     crystals: number;
     castle: number;
     wall: number;
+    resourceChange: ResourceChangeForPlayer | null;
 }
 
 export const PlayerDashboard: React.FC<Props> = ({
@@ -34,6 +36,7 @@ export const PlayerDashboard: React.FC<Props> = ({
     crystals,
     castle,
     wall,
+    resourceChange,
 }) => {
     return (
         <div className={'playerDashboard'}>
@@ -43,30 +46,41 @@ export const PlayerDashboard: React.FC<Props> = ({
                 creatorsLabel="Stavitelé"
                 creatorsIcon={buildersIcon}
                 creators={builders}
+                creatorsChange={resourceChange !== null ? resourceChange.builders : 0}
                 amountLabel="Cihly"
                 amountIcon={bricksIcon}
                 amount={bricks}
+                amountChange={resourceChange !== null ? resourceChange.bricks : 0}
             />
             <PlayerDashboardStats
                 resourceType={'weapons'}
                 creatorsLabel="Vojáci"
                 creatorsIcon={soldiersIcon}
                 creators={soldiers}
+                creatorsChange={resourceChange !== null ? resourceChange.soldiers : 0}
                 amountLabel="Zbraně"
                 amountIcon={weaponsIcon}
                 amount={weapons}
+                amountChange={resourceChange !== null ? resourceChange.weapons : 0}
             />
             <PlayerDashboardStats
                 resourceType={'crystals'}
                 creatorsLabel="Mágové"
                 creatorsIcon={magesIcon}
                 creators={mages}
+                creatorsChange={resourceChange !== null ? resourceChange.mages : 0}
                 amountLabel="Krystaly"
                 amountIcon={crystalsIcon}
                 amount={crystals}
+                amountChange={resourceChange !== null ? resourceChange.crystals : 0}
             />
             <br />
-            <PlayerDashboardCastleStats castle={castle} wall={wall} />
+            <PlayerDashboardCastleStats
+                castle={castle}
+                castleChange={resourceChange !== null ? resourceChange.castle : 0}
+                wall={wall}
+                wallChange={resourceChange !== null ? resourceChange.wall : 0}
+            />
         </div>
     );
 };
