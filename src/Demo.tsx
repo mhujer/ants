@@ -111,15 +111,15 @@ export const Demo: React.FC = () => {
 
             <hr />
 
-            <CastleWithWall player={'black'} castleHeight={0} wallHeight={0} />
-            <CastleWithWall player={'black'} castleHeight={50} wallHeight={50} />
-            <CastleWithWall player={'black'} castleHeight={100} wallHeight={100} />
-            <CastleWithWall player={'black'} castleHeight={150} wallHeight={200} />
+            <CastleWithWall player={'black'} castleHeight={0} wallHeight={0} isVictor={false} showVictoryAnts={false} />
+            <CastleWithWall player={'black'} castleHeight={50} wallHeight={50} isVictor={false} showVictoryAnts={false} />
+            <CastleWithWall player={'black'} castleHeight={100} wallHeight={100} isVictor={false} showVictoryAnts={false} />
+            <CastleWithWall player={'black'} castleHeight={150} wallHeight={200} isVictor={false} showVictoryAnts={false} />
 
-            <CastleWithWall player={'red'} castleHeight={0} wallHeight={0} />
-            <CastleWithWall player={'red'} castleHeight={50} wallHeight={50} />
-            <CastleWithWall player={'red'} castleHeight={100} wallHeight={100} />
-            <CastleWithWall player={'red'} castleHeight={150} wallHeight={200} />
+            <CastleWithWall player={'red'} castleHeight={0} wallHeight={0} isVictor={false} showVictoryAnts={false} />
+            <CastleWithWall player={'red'} castleHeight={50} wallHeight={50} isVictor={false} showVictoryAnts={false} />
+            <CastleWithWall player={'red'} castleHeight={100} wallHeight={100} isVictor={false} showVictoryAnts={false} />
+            <CastleWithWall player={'red'} castleHeight={150} wallHeight={200} isVictor={false} showVictoryAnts={false} />
         </>
     );
 };
