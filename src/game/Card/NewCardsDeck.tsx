@@ -37,19 +37,22 @@ export const NewCardsDeck: React.FC<{ newCard: Card | null }> = ({ newCard }) =>
 
     if (newCard !== null) {
         return (
-            <div
-                ref={newCardDeckDivRef}
-                className={styles.newCard}
-                style={{
-                    left: cardXY.x,
-                    top: cardXY.y,
-                }}
-                onTransitionEnd={newCardTransitionEndedHandler}
-            >
-                <CardComponent cardId={newCard.type} />
-            </div>
+            <>
+                <div className={styles.cardBack}></div>
+                <div
+                    ref={newCardDeckDivRef}
+                    className={styles.newCard}
+                    style={{
+                        left: cardXY.x,
+                        top: cardXY.y,
+                    }}
+                    onTransitionEnd={newCardTransitionEndedHandler}
+                >
+                    <CardComponent cardId={newCard.type} />
+                </div>
+            </>
         );
     }
 
-    return <div className={styles.card}></div>;
+    return <div className={styles.cardBack}></div>;
 };

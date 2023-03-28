@@ -99,16 +99,6 @@ export const Game: React.FC = () => {
                         playerResources={playerOnTurn === 'black' ? game.playerBlack : game.playerRed}
                         discardDeckRef={discardDeckRef}
                     />
-                    <CardsInHand
-                        cards={game.playerBlack.cards}
-                        playerResources={game.playerBlack}
-                        discardDeckRef={discardDeckRef}
-                    />
-                    <CardsInHand
-                        cards={game.playerRed.cards}
-                        playerResources={game.playerRed}
-                        discardDeckRef={discardDeckRef}
-                    />
                 </div>
             </div>
         </div>

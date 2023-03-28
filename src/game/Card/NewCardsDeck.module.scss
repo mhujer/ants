@@ -1,4 +1,4 @@
-.card {
+.card-back {
     width: 8em;
     height: 12em;
     margin: 5px;
@@ -14,7 +14,7 @@
 
     // for card animation
     z-index: 2; // because of the discard deck
-    position: relative;
+    position: absolute;
     top: 0px;
     left: 0px;
     transition-property: left, top;

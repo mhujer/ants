@@ -291,24 +291,12 @@ export const gameSlice = createSlice({
             },
             reducer: (state, action: PayloadAction<{ cardDiscarded: Card; newCard: Card }>) => {
                 const card = action.payload.cardDiscarded;
+                const cardDiscarded: Card = { ...card, discarded: true };
+                state.ui.cardPlayed = cardDiscarded;
 
-                const playerState = state.playerOnTurn === 'black' ? state.playerBlack : state.playerRed;
+                state.ui.newCard = action.payload.newCard;
 
-                // @todo this case is mostly duplicated
-                // draw a new card
-                const playedCardIndex = playerState.cards.findIndex((cardItem) => cardItem.id === card.id);
-                const playedCard = playerState.cards[playedCardIndex]!;
-                playedCard.discarded = true;
-                state.lastPlayedCard = playedCard;
-                playerState.cards[playedCardIndex] = action.payload.newCard;
-
-                // next turn
-                const nextPlayerState = state.playerOnTurn === 'black' ? state.playerRed : state.playerBlack;
-                nextPlayerState.bricks += nextPlayerState.builders;
-                nextPlayerState.weapons += nextPlayerState.soldiers;
-                nextPlayerState.crystals += nextPlayerState.mages;
-
-                state.playerOnTurn = state.playerOnTurn === 'black' ? 'red' : 'black';
+                state.playSound = 'cardPlayed';
             },
         },
         playResourcesChangeAnimation: (state, action: PayloadAction<GameState>) => {
@@ -337,19 +325,21 @@ export const gameSlice = createSlice({
                 },
             };
         },
-        hideResourcesChangeAnimation: (state) => {
-            state.resourceChange = null;
+        hideResourcesChangeAnimation: {
+            prepare: () => {
+                return {
+                    payload: {
+                        newCard: generateCard(),
+                    },
+                };
+            },
+            reducer: (state, action: PayloadAction<{ newCard: Card }>) => {
+                state.resourceChange = null;
 
-            // @todo tady už si můžu připravit novou kartu, kterou si pak budu animovat
-            // @todo ale musím si už při odehrání uložit pozici té karty, abych tam pak mohl naanimovat tu novou
+                state.ui.newCard = action.payload.newCard;
 
-            // @todo předělat na prepare
-            state.ui.newCard = generateCard();
-
-            //console.log(state.ui.oldCardCoordinates.x);
-            //console.log(state.ui.oldCardCoordinates.y);
-
-            state.playSound = 'cardPlayed';
+                state.playSound = 'cardPlayed';
+            },
         },
         newCardTransitionEnded: (state) => {
             const cardPlayed = state.ui.cardPlayed;
