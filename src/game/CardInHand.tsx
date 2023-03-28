@@ -3,8 +3,14 @@ import { CardComponent } from './Card/CardComponent';
 import { Card } from './Card/Card';
 import { cumulativeOffset } from '../utils';
 import styles from './CardInHand.module.scss';
-import { useAppDispatch } from '../store/hooks';
-import { cardAnimationStarted, cardDiscarded, cardPlayed } from '../store/gameSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import {
+    cardAnimationStarted,
+    cardDiscarded,
+    cardPlayed,
+    selectIsCardInProgress,
+    selectIsGameOver,
+} from '../store/gameSlice';
 import { cardDefinitions } from './Card/CardDefinitions';
 import { CardDiscarded } from './Card/CardDiscarded';
 
@@ -24,6 +30,9 @@ export const CardInHand: React.FC<{
     const [cardAction, setCardAction] = useState<'play' | 'discard' | null>(null);
 
     const dispatch = useAppDispatch();
+
+    const isGameOver = useAppSelector(selectIsGameOver);
+    const isCardInProgress = useAppSelector(selectIsCardInProgress);
 
     function handleCardClick() {
         if (discardDeckRef.current === null) {
@@ -71,6 +80,13 @@ export const CardInHand: React.FC<{
 
     function clickHandler(e: MouseEvent) {
         e.preventDefault();
+        if (isGameOver) {
+            return;
+        }
+        if (isCardInProgress) {
+            return;
+        }
+
         if (e.type === 'click') {
             setCardAction('play');
             handleCardClick();

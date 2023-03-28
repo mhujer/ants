@@ -29,7 +29,7 @@ interface ResourceChange {
 
 export interface GameState {
     readonly playerOnTurn: Player;
-    readonly playerWon?: Player;
+    readonly playerWon: Player | null;
     readonly lastPlayedCard?: Card;
     readonly playerBlack: PlayerGameState;
     readonly playerRed: PlayerGameState;
@@ -49,6 +49,7 @@ export interface GameState {
 function getInitialState(): GameState {
     return {
         playerOnTurn: 'black',
+        playerWon: null,
         playerBlack: {
             builders: 2,
             bricks: 5,
@@ -132,7 +133,7 @@ export const gameSlice = createSlice({
                     wall: 0,
                 };
 
-                if (state.playerWon !== undefined) {
+                if (state.playerWon !== null) {
                     console.error('Game is over!');
                     return;
                 }
@@ -376,13 +377,15 @@ export const gameSlice = createSlice({
                 state.playSound = 'fanfare';
             }
 
-            // next turn
-            const nextPlayerState = state.playerOnTurn === 'black' ? state.playerRed : state.playerBlack;
-            nextPlayerState.bricks += nextPlayerState.builders;
-            nextPlayerState.weapons += nextPlayerState.soldiers;
-            nextPlayerState.crystals += nextPlayerState.mages;
+            if (state.playerWon === null) {
+                // next turn
+                const nextPlayerState = state.playerOnTurn === 'black' ? state.playerRed : state.playerBlack;
+                nextPlayerState.bricks += nextPlayerState.builders;
+                nextPlayerState.weapons += nextPlayerState.soldiers;
+                nextPlayerState.crystals += nextPlayerState.mages;
 
-            state.playerOnTurn = state.playerOnTurn === 'black' ? 'red' : 'black';
+                state.playerOnTurn = state.playerOnTurn === 'black' ? 'red' : 'black';
+            }
 
             state.ui.cardPlayed = null;
             state.ui.oldCardCoordinates = null;
@@ -410,5 +413,7 @@ export const {
 } = gameSlice.actions;
 
 export const selectGame = (state: RootState): GameState => state.game;
+export const selectIsGameOver = (state: RootState): boolean => state.game.playerWon !== null;
+export const selectIsCardInProgress = (state: RootState): boolean => state.game.ui.oldCardCoordinates !== null;
 
 export default gameSlice.reducer;
