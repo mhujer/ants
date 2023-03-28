@@ -398,6 +398,9 @@ export const gameSlice = createSlice({
             state.playSound = 'applause';
             state.ui.showVictoryAnts = true;
         },
+        startNewGame: () => {
+            return getInitialState();
+        },
     },
 });
 
@@ -410,6 +413,7 @@ export const {
     newCardTransitionEnded,
     soundPlayed,
     playApplause,
+    startNewGame,
 } = gameSlice.actions;
 
 export const selectGame = (state: RootState): GameState => state.game;

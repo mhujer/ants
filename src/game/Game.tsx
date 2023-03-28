@@ -8,6 +8,7 @@ import { selectGame, soundPlayed } from '../store/gameSlice';
 import { DiscardDeck } from './Card/DiscardDeck';
 import { CardsInHand } from './CardsInHand';
 import { playSound } from '../sounds/Sounds';
+import { NewGameButton } from './NewGameButton';
 
 export const Game: React.FC = () => {
     const discardDeckRef = useRef<HTMLDivElement>(null);
@@ -60,10 +61,13 @@ export const Game: React.FC = () => {
                         />
                     </div>
                     <div className={styles.deckCastlesWrapper}>
-                        <div className={styles.decksWrapper}>
-                            <NewCardsDeck newCard={game.ui.newCard} />
-                            <DiscardDeck ref={discardDeckRef} card={game.lastPlayedCard} />
-                        </div>
+                        {game.playerWon === null && (
+                            <div className={styles.decksWrapper}>
+                                <NewCardsDeck newCard={game.ui.newCard} />
+                                <DiscardDeck ref={discardDeckRef} card={game.lastPlayedCard} />
+                            </div>
+                        )}
+                        {game.playerWon !== null && <NewGameButton />}
                         <div className={styles.castlesWrapper}>
                             <div className={styles.castleBlack}>
                                 <CastleWithWall
