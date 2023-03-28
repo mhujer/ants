@@ -12,6 +12,8 @@ import { NewCardsDeck } from './game/Card/NewCardsDeck';
 import { CardDiscarded } from './game/Card/CardDiscarded';
 import { PlayerBadge } from './game/Player/PlayerBadge';
 import { Flag } from './game/Castle/Flag';
+import { Victory } from './game/Castle/Victory';
+import { generateCard } from './game/Card/Card';
 
 export const Demo: React.FC = () => {
     const cardsIds = Object.keys(cardDefinitions) as [keyof CardDefinitions];
@@ -25,6 +27,9 @@ export const Demo: React.FC = () => {
 
     return (
         <>
+            <Victory color={'black'} />
+            <Victory color={'red'} />
+
             <PlayerDashboardStats
                 resourceType={'bricks'}
                 creatorsLabel="Stavitelé"
@@ -64,7 +69,7 @@ export const Demo: React.FC = () => {
 
             <hr />
 
-            <NewCardsDeck />
+            <NewCardsDeck newCard={generateCard()} />
             <hr />
 
             {cards}

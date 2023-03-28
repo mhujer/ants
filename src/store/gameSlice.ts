@@ -42,6 +42,7 @@ export interface GameState {
             y: number;
         };
         newCard: Card | null;
+        showVictoryAnts: boolean;
     };
 }
 
@@ -94,6 +95,7 @@ function getInitialState(): GameState {
             cardPlayed: null,
             oldCardCoordinates: null,
             newCard: null,
+            showVictoryAnts: false,
         },
     };
 }
@@ -272,6 +274,11 @@ export const gameSlice = createSlice({
                     }
                 }
 
+                // castle cannot be smaller than 0
+                if (opponentState.castle < 0) {
+                    opponentState.castle = 0;
+                }
+
                 // if the attack overflows from wall to castle, play sound of castle being destroyed
                 if (cardDefinition.sound === 'destroyWall' && wasCastleAttacked) {
                     state.playSound = 'destroyCastle';
@@ -384,6 +391,10 @@ export const gameSlice = createSlice({
         soundPlayed: (state) => {
             state.playSound = null;
         },
+        playApplause: (state) => {
+            state.playSound = 'applause';
+            state.ui.showVictoryAnts = true;
+        },
     },
 });
 
@@ -395,6 +406,7 @@ export const {
     hideResourcesChangeAnimation,
     newCardTransitionEnded,
     soundPlayed,
+    playApplause,
 } = gameSlice.actions;
 
 export const selectGame = (state: RootState): GameState => state.game;

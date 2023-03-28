@@ -1,5 +1,11 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import gameReducer, { cardPlayed, hideResourcesChangeAnimation, playResourcesChangeAnimation } from './gameSlice';
+import gameReducer, {
+    cardPlayed,
+    hideResourcesChangeAnimation,
+    playApplause,
+    playResourcesChangeAnimation,
+    soundPlayed,
+} from './gameSlice';
 import { listenerMiddleware, startAppListening } from './listenerMiddleware';
 
 startAppListening({
@@ -12,6 +18,18 @@ startAppListening({
         await listenerApi.delay(900);
 
         listenerApi.dispatch(hideResourcesChangeAnimation());
+    },
+});
+
+startAppListening({
+    actionCreator: soundPlayed,
+    effect: async (_action, listenerApi) => {
+        const originalGameState = listenerApi.getOriginalState().game;
+
+        if (originalGameState.playSound === 'fanfare') {
+            await listenerApi.delay(2500);
+            listenerApi.dispatch(playApplause());
+        }
     },
 });
 

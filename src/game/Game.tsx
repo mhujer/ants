@@ -35,6 +35,10 @@ export const Game: React.FC = () => {
         setBirdsPlaying(true);
     }, [game.playerOnTurn, birdsPlaying]);
 
+    const isBlackPlayerVictor = game.playerWon == 'black';
+    const isRedPlayerVictor = game.playerWon == 'red';
+    const showVictoryAnts = game.ui.showVictoryAnts;
+
     return (
         <div className={styles.wholeGameWrapper}>
             <div className={styles.background}></div>
@@ -66,6 +70,8 @@ export const Game: React.FC = () => {
                                     player={'black'}
                                     castleHeight={game.playerBlack.castle}
                                     wallHeight={game.playerBlack.wall}
+                                    isVictor={isBlackPlayerVictor}
+                                    showVictoryAnts={showVictoryAnts}
                                 />
                             </div>
                             <div className={styles.castleRed}>
@@ -73,6 +79,8 @@ export const Game: React.FC = () => {
                                     player={'red'}
                                     castleHeight={game.playerRed.castle}
                                     wallHeight={game.playerRed.wall}
+                                    isVictor={isRedPlayerVictor}
+                                    showVictoryAnts={showVictoryAnts}
                                 />
                             </div>
                         </div>

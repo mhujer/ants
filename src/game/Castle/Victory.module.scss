@@ -1,0 +1,53 @@
+.victory-black {
+    width: 128px;
+    height: 32px;
+    background-repeat: no-repeat;
+    animation-name: victoryBlackAnimation;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+}
+
+.victory-red {
+    width: 128px;
+    height: 32px;
+    background-repeat: no-repeat;
+    animation-name: victoryRedAnimation;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes victoryBlackAnimation {
+    0% {
+        background-image: url('../../assets/images/victory/victory-black-1.png');
+    }
+    25% {
+        background-image: url('../../assets/images/victory/victory-black-2.png');
+    }
+    50% {
+        background-image: url('../../assets/images/victory/victory-black-3.png');
+    }
+    75% {
+        background-image: url('../../assets/images/victory/victory-black-4.png');
+    }
+    100% {
+        background-image: url('../../assets/images/victory/victory-black-1.png');
+    }
+}
+
+@keyframes victoryRedAnimation {
+    0% {
+        background-image: url('../../assets/images/victory/victory-red-1.png');
+    }
+    25% {
+        background-image: url('../../assets/images/victory/victory-red-2.png');
+    }
+    50% {
+        background-image: url('../../assets/images/victory/victory-red-3.png');
+    }
+    75% {
+        background-image: url('../../assets/images/victory/victory-red-4.png');
+    }
+    100% {
+        background-image: url('../../assets/images/victory/victory-red-1.png');
+    }
+}

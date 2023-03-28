@@ -11,9 +11,16 @@
     position: relative;
 }
 
+.trompet-wrapper {
+    position: absolute;
+    left: 46px;
+    z-index: 1;
+}
+
 .flag-wrapper {
     position: absolute;
     left: 72px;
+    z-index: 1;
     transition-property: bottom; // animate changes
     transition-duration: 0.7s;
 }
@@ -28,4 +35,11 @@
 .grass-image {
     position: absolute;
     bottom: 0px; // so the castle starts in the middle of the grass
+}
+
+.victory-ants-wrapper {
+    z-index: 1;
+    position: absolute;
+    bottom: 5px;
+    left: 18px;
 }

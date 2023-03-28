@@ -8,13 +8,15 @@ interface Props {
     player: Player;
     castleHeight: number;
     wallHeight: number;
+    isVictor: boolean;
+    showVictoryAnts: boolean;
 }
 
-export const CastleWithWall: React.FC<Props> = ({ player, castleHeight, wallHeight }) => {
+export const CastleWithWall: React.FC<Props> = ({ player, castleHeight, wallHeight, isVictor, showVictoryAnts }) => {
     if (player === 'black') {
         return (
             <div className={styles.castleWithWall}>
-                <Castle player={player} height={castleHeight} />
+                <Castle player={player} height={castleHeight} isVictor={isVictor} showVictoryAnts={showVictoryAnts} />
                 <Wall height={wallHeight} />
             </div>
         );
@@ -23,7 +25,7 @@ export const CastleWithWall: React.FC<Props> = ({ player, castleHeight, wallHeig
     return (
         <div className={styles.castleWithWall}>
             <Wall height={wallHeight} />
-            <Castle player={player} height={castleHeight} />
+            <Castle player={player} height={castleHeight} isVictor={isVictor} showVictoryAnts={showVictoryAnts} />
         </div>
     );
 };
