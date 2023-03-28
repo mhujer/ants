@@ -35,6 +35,14 @@ export interface GameState {
     readonly playerRed: PlayerGameState;
     readonly playSound: Sound | null;
     readonly resourceChange: ResourceChange | null;
+    readonly ui: {
+        cardPlayed: Card | null;
+        oldCardCoordinates: null | {
+            x: number;
+            y: number;
+        };
+        newCard: Card | null;
+    };
 }
 
 function getInitialState(): GameState {
@@ -82,6 +90,11 @@ function getInitialState(): GameState {
         },
         playSound: null,
         resourceChange: null,
+        ui: {
+            cardPlayed: null,
+            oldCardCoordinates: null,
+            newCard: null,
+        },
     };
 }
 
@@ -89,8 +102,9 @@ export const gameSlice = createSlice({
     name: 'game',
     initialState: getInitialState(),
     reducers: {
-        cardAnimationStarted: (state) => {
+        cardAnimationStarted: (state, action: PayloadAction<{ x: number; y: number }>) => {
             state.playSound = 'cardPlayed';
+            state.ui.oldCardCoordinates = action.payload;
         },
         cardPlayed: {
             prepare: (card: Card) => {
@@ -103,6 +117,7 @@ export const gameSlice = createSlice({
             },
             reducer: (state, action: PayloadAction<{ cardPlayed: Card; newCard: Card }>) => {
                 const card = action.payload.cardPlayed;
+                state.ui.cardPlayed = card;
 
                 const minimalGameStateValues = {
                     builders: 1,
@@ -263,28 +278,6 @@ export const gameSlice = createSlice({
                 } else {
                     state.playSound = cardDefinition.sound;
                 }
-
-                // draw a new card
-                state.lastPlayedCard = card;
-                const playedCardIndex = playerState.cards.findIndex((cardItem) => cardItem.id === card.id);
-                playerState.cards[playedCardIndex] = action.payload.newCard;
-
-                if (playerState.castle >= 100) {
-                    state.playerWon = state.playerOnTurn;
-                    state.playSound = 'fanfare';
-                }
-                if (opponentState.castle <= 0) {
-                    state.playerWon = state.playerOnTurn;
-                    state.playSound = 'fanfare';
-                }
-
-                // next turn
-                const nextPlayerState = state.playerOnTurn === 'black' ? state.playerRed : state.playerBlack;
-                nextPlayerState.bricks += nextPlayerState.builders;
-                nextPlayerState.weapons += nextPlayerState.soldiers;
-                nextPlayerState.crystals += nextPlayerState.mages;
-
-                state.playerOnTurn = state.playerOnTurn === 'black' ? 'red' : 'black';
             },
         },
         cardDiscarded: {
@@ -346,6 +339,57 @@ export const gameSlice = createSlice({
         },
         hideResourcesChangeAnimation: (state) => {
             state.resourceChange = null;
+
+            // @todo tady už si můžu připravit novou kartu, kterou si pak budu animovat
+            // @todo ale musím si už při odehrání uložit pozici té karty, abych tam pak mohl naanimovat tu novou
+
+            // @todo předělat na prepare
+            state.ui.newCard = generateCard();
+
+            //console.log(state.ui.oldCardCoordinates.x);
+            //console.log(state.ui.oldCardCoordinates.y);
+
+            state.playSound = 'cardPlayed';
+        },
+        newCardTransitionEnded: (state) => {
+            const cardPlayed = state.ui.cardPlayed;
+            if (cardPlayed === null) {
+                throw new Error('!');
+            }
+
+            const newCard = state.ui.newCard;
+            if (newCard === null) {
+                throw new Error('!');
+            }
+
+            const playerState = state.playerOnTurn === 'black' ? state.playerBlack : state.playerRed;
+            const opponentState = state.playerOnTurn === 'black' ? state.playerRed : state.playerBlack;
+
+            // draw a new card
+            state.lastPlayedCard = cardPlayed;
+            const playedCardIndex = playerState.cards.findIndex((cardItem) => cardItem.id === cardPlayed.id);
+            playerState.cards[playedCardIndex] = newCard;
+
+            if (playerState.castle >= 100) {
+                state.playerWon = state.playerOnTurn;
+                state.playSound = 'fanfare';
+            }
+            if (opponentState.castle <= 0) {
+                state.playerWon = state.playerOnTurn;
+                state.playSound = 'fanfare';
+            }
+
+            // next turn
+            const nextPlayerState = state.playerOnTurn === 'black' ? state.playerRed : state.playerBlack;
+            nextPlayerState.bricks += nextPlayerState.builders;
+            nextPlayerState.weapons += nextPlayerState.soldiers;
+            nextPlayerState.crystals += nextPlayerState.mages;
+
+            state.playerOnTurn = state.playerOnTurn === 'black' ? 'red' : 'black';
+
+            state.ui.cardPlayed = null;
+            state.ui.oldCardCoordinates = null;
+            state.ui.newCard = null;
         },
         soundPlayed: (state) => {
             state.playSound = null;
@@ -359,6 +403,7 @@ export const {
     cardDiscarded,
     playResourcesChangeAnimation,
     hideResourcesChangeAnimation,
+    newCardTransitionEnded,
     soundPlayed,
 } = gameSlice.actions;
 

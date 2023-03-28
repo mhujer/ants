@@ -49,7 +49,7 @@ export const CardInHand: React.FC<{
 
         setCardXY({ x: discardDeckX - cardX, y: discardDeckY - cardY });
 
-        dispatch(cardAnimationStarted());
+        dispatch(cardAnimationStarted({ x: cardX, y: cardY }));
     }
 
     const playCardHandler: TransitionEventHandler<HTMLDivElement> = (e) => {
@@ -84,7 +84,8 @@ export const CardInHand: React.FC<{
         console.dir(e);
     }
 
-    const canCardBePlayed = canBeCardPlayed(playerResources, card);
+    // cardAction !== null handles situation when Card is transitioned to discard deck
+    const canCardBePlayed = canBeCardPlayed(playerResources, card) || cardAction !== null;
 
     if (canCardBePlayed) {
         return (

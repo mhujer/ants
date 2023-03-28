@@ -8,7 +8,7 @@ import bricksIcon from './assets/images/dashboard-icons/bricks.png';
 import { PlayerDashboard } from './game/Player/PlayerDashboard';
 import { CardDefinitions, cardDefinitions } from './game/Card/CardDefinitions';
 import { CardComponent } from './game/Card/CardComponent';
-import { CardBack } from './game/Card/CardBack';
+import { NewCardsDeck } from './game/Card/NewCardsDeck';
 import { CardDiscarded } from './game/Card/CardDiscarded';
 import { PlayerBadge } from './game/Player/PlayerBadge';
 import { Flag } from './game/Castle/Flag';
@@ -64,7 +64,7 @@ export const Demo: React.FC = () => {
 
             <hr />
 
-            <CardBack />
+            <NewCardsDeck />
             <hr />
 
             {cards}

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './Game.module.scss';
 import { PlayerDashboard } from './Player/PlayerDashboard';
 import { CastleWithWall } from './Castle/CastleWithWall';
-import { CardBack } from './Card/CardBack';
+import { NewCardsDeck } from './Card/NewCardsDeck';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { selectGame, soundPlayed } from '../store/gameSlice';
 import { DiscardDeck } from './Card/DiscardDeck';
@@ -57,7 +57,7 @@ export const Game: React.FC = () => {
                     </div>
                     <div className={styles.deckCastlesWrapper}>
                         <div className={styles.decksWrapper}>
-                            <CardBack />
+                            <NewCardsDeck newCard={game.ui.newCard} />
                             <DiscardDeck ref={discardDeckRef} card={game.lastPlayedCard} />
                         </div>
                         <div className={styles.castlesWrapper}>
@@ -97,6 +97,16 @@ export const Game: React.FC = () => {
                     <CardsInHand
                         cards={playerOnTurn === 'black' ? game.playerBlack.cards : game.playerRed.cards}
                         playerResources={playerOnTurn === 'black' ? game.playerBlack : game.playerRed}
+                        discardDeckRef={discardDeckRef}
+                    />
+                    <CardsInHand
+                        cards={game.playerBlack.cards}
+                        playerResources={game.playerBlack}
+                        discardDeckRef={discardDeckRef}
+                    />
+                    <CardsInHand
+                        cards={game.playerRed.cards}
+                        playerResources={game.playerRed}
                         discardDeckRef={discardDeckRef}
                     />
                 </div>
