@@ -16,7 +16,7 @@ import recruitImage from '../../assets/images/cards/recruit.png';
 import attackImage from '../../assets/images/cards/attack.png';
 import saboteurImage from '../../assets/images/cards/saboteur.png';
 import thiefImage from '../../assets/images/cards/thief.png';
-import SWATImage from '../../assets/images/cards/SWAT.png';
+import SWATImage from '../../assets/images/cards/swat.png';
 import BansheeImage from '../../assets/images/cards/Banshee.png';
 import conjureBricksImage from '../../assets/images/cards/conjureBricks.png';
 import destroyBricksImage from '../../assets/images/cards/destroyBricks.png';

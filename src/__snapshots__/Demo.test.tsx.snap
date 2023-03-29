@@ -1300,7 +1300,7 @@ exports[`Demo of all copomenents can be rendered > renders demo components 1`] =
         className="_cardImage_fc19cf"
         style={
           {
-            "backgroundImage": "url(\\"/src/assets/images/cards/SWAT.png\\")",
+            "backgroundImage": "url(\\"/src/assets/images/cards/swat.png\\")",
           }
         }
       />
