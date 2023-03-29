@@ -9,6 +9,7 @@ import { DiscardDeck } from './Card/DiscardDeck';
 import { CardsInHand } from './CardsInHand';
 import { playSound } from '../sounds/Sounds';
 import { NewGameButton } from './NewGameButton';
+import { About } from './About';
 
 export const Game: React.FC = () => {
     const discardDeckRef = useRef<HTMLDivElement>(null);
@@ -113,6 +114,7 @@ export const Game: React.FC = () => {
                     />
                 </div>
             </div>
+            <About />
         </div>
     );
 };
