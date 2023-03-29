@@ -3,7 +3,7 @@ on:
     pull_request:
 
 jobs:
-    build:
+    build-and-deploy:
         runs-on: ubuntu-latest
         permissions:
             contents: read
@@ -16,5 +16,13 @@ jobs:
                   node-version: 18.x
                   cache: 'npm'
             - run: npm ci
-            - run: npm run build
             - run: npm run ci-build
+            - run: npm run build
+            - name: Publish
+              uses: cloudflare/pages-action@1
+              with:
+                  apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                  accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+                  projectName: ants
+                  directory: dist
+                  gitHubToken: ${{ secrets.GITHUB_TOKEN }}
